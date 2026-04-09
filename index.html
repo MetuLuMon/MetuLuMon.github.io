@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LuMon — Lunar Monocular Depth Estimation Benchmark · AI4Space @ CVPR 2026</title>
+<meta content="LuMon: A comprehensive benchmark evaluating 14 depth estimation models across 6 lunar and analog datasets. Accepted at the 4th AI4Space Workshop, CVPR 2026." name="description"/>
+<meta content="LuMon — Lunar Monocular Depth Estimation Benchmark" property="og:title"/>
+<meta content="Comprehensive benchmark evaluating 14 depth models across 6 lunar datasets. Two novel datasets, failure analysis, and open-source tools. AI4Space @ CVPR 2026." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="videos/LunarSim_comparison_poster.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="LuMon — Lunar Monocular Depth Estimation Benchmark" name="twitter:title"/>
+<meta content="14 depth models, 6 lunar datasets, 2 novel contributions. Accepted at AI4Space @ CVPR 2026." name="twitter:description"/>
+<meta content="videos/LunarSim_comparison_poster.jpg" name="twitter:image"/>
+<link href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;circle cx='16' cy='16' r='15' fill='%23080c18' stroke='%234f80ff' stroke-width='1.5'/&gt;&lt;circle cx='14' cy='14' r='11' fill='%23b0b0b0'/&gt;&lt;circle cx='14' cy='14' r='11' fill='url(%23g)'/&gt;&lt;circle cx='17' cy='12' r='3.5' fill='rgba(0,0,0,0.3)'/&gt;&lt;circle cx='11' cy='17' r='2' fill='rgba(0,0,0,0.25)'/&gt;&lt;circle cx='16' cy='19' r='1.2' fill='rgba(0,0,0,0.2)'/&gt;&lt;defs&gt;&lt;radialGradient id='g' cx='0.35' cy='0.35'&gt;&lt;stop offset='0%25' stop-color='%23d8d8d8'/&gt;&lt;stop offset='60%25' stop-color='%23888'/&gt;&lt;stop offset='100%25' stop-color='%23222'/&gt;&lt;/radialGradient&gt;&lt;/defs&gt;&lt;/svg&gt;" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    /* ════════════════════════════════════════
+       RESET & BASE
+    ════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+      --navy:    #080c18;
+      --navy2:   #0c1120;
+      --navy3:   #101525;
+      --card:    #121828;
+      --card2:   #161e30;
+      --blue:    #4f80ff;
+      --blue2:   #3a68f0;
+      --violet:  #8b5cf6;
+      --cyan:    #22d3ee;
+      --silver:  #b8c6d8;
+      --muted:   #8494b0;
+      --faint:   #3a4560;
+      --white:   #f0f4ff;
+      --border:  rgba(79,128,255,.14);
+      --glow-b:  rgba(79,128,255,.22);
+      --glow-v:  rgba(139,92,246,.18);
+      --r:       14px;
+      --r-sm:    8px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--silver);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ════════════════════════════════════════
+       STARFIELD
+    ════════════════════════════════════════ */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .stars::before, .stars::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+    .stars::before {
+      background-image:
+        radial-gradient(1px 1px at  8%  6%, rgba(255,255,255,.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 18% 22%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 29% 41%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 43%  9%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 57% 33%, rgba(255,255,255,.7) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 68%  2%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 79% 18%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 91% 47%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at  3% 58%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 13% 74%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 24% 89%, rgba(255,255,255,.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 36% 63%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 48% 78%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 62% 56%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 73% 82%, rgba(255,255,255,.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 84% 67%, rgba(255,255,255,.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 94% 91%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 52% 14%, rgba(255,255,255,.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 87% 38%, rgba(255,255,255,.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 6%  93%, rgba(255,255,255,.3) 0%, transparent 100%);
+    }
+
+    /* ════════════════════════════════════════
+       NAVBAR
+    ════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: rgba(8,12,24,.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-brand-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem;
+    }
+    .nav-brand-text {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -.02em;
+    }
+    .nav-brand-text span {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: .8rem;
+      margin-left: 6px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: .83rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: all .2s;
+    }
+    .nav-links a:hover {
+      color: var(--white);
+      background: rgba(255,255,255,.06);
+    }
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-cta {
+      padding: 8px 18px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: var(--r-sm);
+      font-size: .82rem;
+      font-weight: 600;
+      transition: all .2s;
+    }
+    .nav-cta:hover {
+      background: var(--blue2);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--glow-b);
+    }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 32px 80px;
+    }
+
+    /* Ambient glows */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 700px;
+      background: radial-gradient(ellipse, rgba(79,128,255,.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 20%; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, rgba(139,92,246,.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-venue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(52,211,153,.08);
+      border: 1px solid rgba(52,211,153,.3);
+      border-radius: 100px;
+      padding: 5px 14px 5px 10px;
+      margin-bottom: 28px;
+      text-decoration: none;
+      transition: background .2s, border-color .2s;
+    }
+    .hero-venue:hover {
+      background: rgba(52,211,153,.13);
+      border-color: rgba(52,211,153,.5);
+    }
+    .venue-dot {
+      width: 20px; height: 20px;
+      background: linear-gradient(135deg, #34d399, #059669);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .6rem;
+    }
+    .hero-venue span {
+      font-size: .78rem;
+      font-weight: 600;
+      color: #5ee8b4;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -.035em;
+      color: var(--white);
+      margin-bottom: 22px;
+    }
+    h1 .hl {
+      background: linear-gradient(120deg, #7aa4ff, var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-abstract {
+      font-size: .945rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      max-width: 600px;
+    }
+
+    .workshop-info {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 0;
+      margin-bottom: 32px;
+    }
+    .wi-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .wi-item svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .wi-sep {
+      width: 1px; height: 14px;
+      background: var(--faint);
+      margin: 0 12px;
+    }
+    .wi-link {
+      color: #5ee8b4;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .wi-link:hover { color: #34d399; }
+
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 11px 22px;
+      border-radius: var(--r-sm);
+      font-size: .855rem;
+      font-weight: 600;
+      transition: all .2s;
+    }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .btn-blue {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 20px var(--glow-b);
+    }
+    .btn-blue:hover { background: var(--blue2); transform: translateY(-2px); box-shadow: 0 8px 28px var(--glow-b); }
+    .btn-ghost {
+      background: var(--card2);
+      color: var(--silver);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: rgba(79,128,255,.35); color: var(--white); transform: translateY(-2px); }
+
+    /* Stats row */
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      width: fit-content;
+    }
+    .hstat {
+      padding: 18px 28px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .hstat:last-child { border-right: none; }
+    .hstat-n {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -.04em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hstat-n .unit {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+    .hstat-l {
+      font-size: .72rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* Hero right — moon graphic */
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .moon-scene {
+      position: relative;
+      width: 340px;
+      height: 340px;
+    }
+    .moon-glow {
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(circle, rgba(79,128,255,.12) 0%, transparent 65%);
+      border-radius: 50%;
+    }
+    .moon-body {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 35%,
+          #d8d8d8 0%, #b0b0b0 20%,
+          #888 45%, #585858 68%,
+          #2e2e2e 85%, #141414 100%);
+      box-shadow:
+        inset -30px -30px 60px rgba(0,0,0,.85),
+        inset 12px 12px 40px rgba(255,255,255,.07),
+        0 0 80px rgba(79,128,255,.1);
+      position: relative;
+      overflow: hidden;
+    }
+    /* craters */
+    .crater {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,0,0,.5) 40%, rgba(255,255,255,.03) 70%, transparent 100%);
+      box-shadow: inset 2px 2px 6px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.05);
+    }
+    .c1 { width: 70px; height: 70px; top: 28%; left: 40%; }
+    .c2 { width: 42px; height: 42px; top: 55%; left: 22%; }
+    .c3 { width: 28px; height: 28px; top: 20%; left: 58%; }
+    .c4 { width: 20px; height: 20px; top: 65%; left: 55%; }
+    .c5 { width: 16px; height: 16px; top: 40%; left: 18%; }
+    .moon-ring {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      border: 1px solid rgba(79,128,255,.15);
+    }
+    .moon-ring2 {
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1px dashed rgba(79,128,255,.07);
+    }
+
+    /* floating chips around moon */
+    .moon-chip {
+      position: absolute;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--silver);
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    }
+    .chip-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+    }
+    .mc1 { top: 5%; right: -10px; animation: float1 4s ease-in-out infinite; }
+    .mc2 { bottom: 15%; left: -20px; animation: float2 5s ease-in-out infinite; }
+    .mc3 { top: 55%; right: -30px; animation: float1 6s ease-in-out infinite reverse; }
+
+    @keyframes float1 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ════════════════════════════════════════
+       SECTION HELPERS
+    ════════════════════════════════════════ */
+    section { position: relative; z-index: 1; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+    .sec { padding: 96px 0; }
+    .sec-alt { background: linear-gradient(180deg, transparent, rgba(12,17,32,.7) 20%, rgba(12,17,32,.7) 80%, transparent); }
+
+    .sec-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+    .sec-label::before {
+      content: '';
+      display: block;
+      width: 16px; height: 1.5px;
+      background: var(--blue);
+      border-radius: 1px;
+    }
+    .sec-h {
+      font-size: clamp(1.55rem, 2.8vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--white);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .sec-p {
+      font-size: .93rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+    .sec-head { margin-bottom: 52px; }
+    .sec-head-center { text-align: center; margin-bottom: 52px; }
+    .sec-head-center .sec-label { justify-content: center; }
+    .sec-head-center .sec-p { margin: 0 auto; }
+
+    /* ════════════════════════════════════════
+       ABSTRACT
+    ════════════════════════════════════════ */
+    .abstract-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 48px 56px;
+      position: relative;
+      overflow: hidden;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .abstract-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--violet), var(--cyan));
+    }
+    .abstract-box::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, var(--glow-v) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .abstract-box p {
+      font-size: .93rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .abstract-box p:last-child { margin: 0; }
+    .abstract-box strong { color: var(--silver); }
+
+    /* ════════════════════════════════════════
+       CONTRIBUTIONS
+    ════════════════════════════════════════ */
+    .contrib-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .contrib-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px 26px;
+      transition: border-color .25s, transform .25s;
+    }
+    .contrib-card:hover {
+      border-color: rgba(79,128,255,.32);
+      transform: translateY(-4px);
+    }
+    .cc-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+    }
+    .ic-b { background: rgba(79,128,255,.12); }
+    .ic-v { background: rgba(139,92,246,.12); }
+    .ic-c { background: rgba(34,211,238,.12); }
+    .ic-g { background: rgba(52,211,153,.12); }
+    .cc-title {
+      font-size: .93rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .cc-desc {
+      font-size: .83rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ════════════════════════════════════════
+       DATASETS
+    ════════════════════════════════════════ */
+    .ds-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 36px;
+    }
+    .ds-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      transition: border-color .25s, transform .25s;
+    }
+    .ds-card:hover { border-color: rgba(79,128,255,.32); transform: translateY(-3px); }
+    .ds-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .ds-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .ds-body {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .ds-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: .7rem;
+      font-weight: 500;
+    }
+    .tag-blue  { background: rgba(79,128,255,.1);  color: #7aa4ff; border: 1px solid rgba(79,128,255,.2); }
+    .tag-violet{ background: rgba(139,92,246,.1); color: #b07aff; border: 1px solid rgba(139,92,246,.2); }
+    .tag-cyan  { background: rgba(34,211,238,.1);  color: #5ee8f5; border: 1px solid rgba(34,211,238,.2); }
+    .tag-green { background: rgba(52,211,153,.1);  color: #5ee8b4; border: 1px solid rgba(52,211,153,.2); }
+    .tag-amber { background: rgba(251,191,36,.1);  color: #fcd34d; border: 1px solid rgba(251,191,36,.2); }
+    .tag-red   { background: rgba(248,113,113,.1); color: #fca5a5; border: 1px solid rgba(248,113,113,.2); }
+
+    /* Dataset comparison table */
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .845rem; }
+    thead { background: var(--card2); }
+    thead th {
+      padding: 13px 18px;
+      text-align: left;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-top: 1px solid var(--border);
+      background: var(--card);
+      transition: background .15s;
+    }
+    tbody tr:hover { background: var(--card2); }
+    tbody td {
+      padding: 12px 18px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    tbody td:first-child { font-weight: 600; color: var(--white); }
+    .highlight-row { background: rgba(79,128,255,.05) !important; }
+    .gold { color: #fbbf24 !important; font-weight: 700 !important; }
+    .silver-c { color: #9ca3af !important; font-weight: 600 !important; }
+    .bronze { color: #cd7c3a !important; font-weight: 600 !important; }
+
+    /* ════════════════════════════════════════
+       VIDEOS
+    ════════════════════════════════════════ */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .video-featured {
+      grid-column: 1 / -1;
+    }
+    .video-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .video-card:hover {
+      border-color: rgba(79,128,255,.35);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(0,0,0,.5);
+    }
+    .video-wrap {
+      position: relative;
+      background: #000;
+    }
+    .video-wrap video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+    }
+    .video-info {
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .video-badge {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem;
+      margin-top: 2px;
+    }
+    .vb-blue   { background: rgba(79,128,255,.12); }
+    .vb-violet { background: rgba(139,92,246,.12); }
+    .vb-cyan   { background: rgba(34,211,238,.12); }
+    .vb-green  { background: rgba(52,211,153,.12); }
+    .vb-amber  { background: rgba(251,191,36,.12); }
+    .video-meta h4 {
+      font-size: .93rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .video-meta p {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ════════════════════════════════════════
+       RESULTS
+    ════════════════════════════════════════ */
+    .findings-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 48px;
+    }
+    .finding-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+    }
+    .fn {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .fn-b { color: #7aa4ff; }
+    .fn-v { color: #b07aff; }
+    .fn-c { color: #5ee8f5; }
+    .fn-g { color: #5ee8b4; }
+    .finding-card h4 {
+      font-size: .83rem;
+      font-weight: 700;
+      color: var(--silver);
+      margin-bottom: 5px;
+    }
+    .finding-card p {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .table-note {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ════════════════════════════════════════
+       CHALLENGES
+    ════════════════════════════════════════ */
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .ch-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px 24px;
+      transition: border-color .25s, transform .25s;
+    }
+    .ch-card:hover { border-color: rgba(79,128,255,.3); transform: translateY(-3px); }
+    .ch-icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .ch-title {
+      font-size: .93rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .ch-desc {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .sev-bar {
+      height: 3px;
+      background: var(--navy3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .sev-fill { height: 100%; border-radius: 2px; }
+
+    /* ════════════════════════════════════════
+       METRICS
+    ════════════════════════════════════════ */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+    }
+    .mc-title {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .mc-title.t-b { color: var(--blue); }
+    .mc-title.t-v { color: var(--violet); }
+    .mc-title.t-c { color: var(--cyan); }
+    .mc-title.t-g { color: #34d399; }
+    .mi {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-bottom: 9px;
+    }
+    .mi:last-child { margin: 0; }
+    .mi-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .d-b { background: var(--blue); }
+    .d-v { background: var(--violet); }
+    .d-c { background: var(--cyan); }
+    .d-g { background: #34d399; }
+    .mi span { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+    .mi strong { color: var(--silver); font-weight: 600; }
+
+    /* ════════════════════════════════════════
+       CODE / DOWNLOADS
+    ════════════════════════════════════════ */
+    .code-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .code-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .code-card:hover { border-color: rgba(79,128,255,.32); transform: translateY(-3px); }
+    .code-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .code-header-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .code-header h4 {
+      font-size: .93rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .code-header p {
+      font-size: .75rem;
+      color: var(--muted);
+    }
+    .code-body { padding: 0; }
+    .file-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 24px;
+      border-top: 1px solid var(--border);
+      transition: background .15s;
+    }
+    .file-row:first-child { border-top: none; }
+    .file-row:hover { background: var(--card2); }
+    .file-icon { font-size: .85rem; flex-shrink: 0; }
+    .file-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      color: var(--silver);
+      flex: 1;
+    }
+    .file-tag {
+      font-size: .67rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .ft-py { background: rgba(79,128,255,.1); color: #7aa4ff; }
+    .ft-md { background: rgba(52,211,153,.1); color: #5ee8b4; }
+
+    /* Download CTA */
+    .download-cta {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+    .download-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--violet));
+    }
+    .download-cta h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .download-cta p {
+      font-size: .87rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 48px 32px;
+    }
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-brand-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+    }
+    .footer-brand-text { font-size: .87rem; font-weight: 700; color: var(--silver); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: .8rem;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--blue); }
+    .footer-copy {
+      font-size: .75rem;
+      color: var(--faint);
+    }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-wrap { grid-template-columns: 1fr; }
+      .contrib-grid { grid-template-columns: repeat(2, 1fr); }
+      .ds-grid { grid-template-columns: repeat(2, 1fr); }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .findings-row { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .contrib-grid { grid-template-columns: 1fr; }
+      .ds-grid { grid-template-columns: 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
+      .challenge-grid { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .code-layout { grid-template-columns: 1fr; }
+      .findings-row { grid-template-columns: 1fr 1fr; }
+      .abstract-box { padding: 32px 24px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+
+    /* sr-only (screen reader) */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* skip-to-content */
+    .skip-link {
+      position: fixed;
+      top: -100%;
+      left: 16px;
+      z-index: 10000;
+      padding: 10px 20px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: var(--r-sm);
+      font-size: .85rem;
+      font-weight: 600;
+      transition: top .2s;
+    }
+    .skip-link:focus { top: 12px; }
+
+    /* hamburger menu */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      color: var(--silver);
+    }
+    .nav-hamburger svg { width: 22px; height: 22px; }
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; align-items: center; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 62px; left: 0; right: 0;
+        flex-direction: column;
+        background: rgba(8,12,24,.96);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 8px 16px 16px;
+        gap: 2px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px 16px; font-size: .9rem; }
+      .nav-cta { font-size: .85rem; }
+    }
+
+    /* authors section */
+    .authors {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 32px 16px;
+    }
+    .author-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 20px;
+      margin-bottom: 6px;
+    }
+    .author-name {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--silver);
+    }
+    .author-affil {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* bibtex */
+    .bibtex-section { padding: 64px 0 0; }
+    .bib-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .bib-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card2);
+    }
+    .bib-header span {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .bib-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      background: rgba(79,128,255,.1);
+      border: 1px solid rgba(79,128,255,.25);
+      border-radius: 6px;
+      color: var(--blue);
+      font-size: .75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .bib-copy:hover { background: rgba(79,128,255,.18); border-color: rgba(79,128,255,.4); }
+    .bib-copy svg { width: 13px; height: 13px; }
+    .bib-pre {
+      padding: 20px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      line-height: 1.7;
+      color: var(--muted);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* active nav indicator */
+    .nav-links a.active {
+      color: var(--white);
+      background: rgba(79,128,255,.1);
+    }
+
+    /* moon tablet reposition */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .hero-wrap { grid-template-columns: 1fr; }
+      .hero-right {
+        display: flex;
+        justify-content: center;
+        margin-top: -20px;
+      }
+      .moon-scene { width: 220px; height: 220px; }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--card2); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+  
+    /* ════════════════════════════════════════
+       SLIDER
+    ════════════════════════════════════════ */
+    .slider-container {
+      position: relative;
+      max-width: 1180px;
+      margin: 40px auto;
+      overflow: hidden;
+      border-radius: var(--r);
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+    .slider-slide {
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: transparent; align-items: flex-start;
+    }
+    .slider-slide img {
+      max-width: 100%;
+      display: block;
+    }
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(8,12,24,.7);
+      color: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background .2s, border-color .2s;
+    }
+    .slider-arrow:hover { background: var(--blue); border-color: rgba(79,128,255,.5); }
+    .slider-prev { left: 15px; }
+    .slider-next { right: 15px; }
+
+    /* End slider CSS */
+
+  
+    .extracted-table tbody td:not(:first-child) { text-align: center; } 
+    .extracted-table thead th { text-align: center; padding: 10px 12px; } 
+</style>
+</head>
+<body>
+<a class="skip-link" href="#abstract">Skip to content</a>
+<div aria-hidden="true" class="stars"></div>
+<!-- ══ NAV ══════════════════════════════════ -->
+<nav>
+<div class="nav-wrap">
+<div class="nav-brand">
+<div aria-hidden="true" class="nav-brand-icon"><svg fill="none" height="18" stroke="#fff" stroke-width="1.5" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><circle cx="10" cy="10" fill="rgba(255,255,255,.2)" r="3"></circle><circle cx="15" cy="14" fill="rgba(255,255,255,.15)" r="1.5"></circle><circle cx="8" cy="15" fill="rgba(255,255,255,.12)" r="1"></circle></svg></div>
+<div class="nav-brand-text">LuMon <span>· AI4Space @ CVPR 2026</span></div>
+</div>
+<ul class="nav-links" id="navLinks">
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#datasets">Datasets</a></li>
+<li><a href="#videos">Videos</a></li>
+<li><a href="#results">Results</a></li>
+<li><a href="#citation">Cite</a></li>
+</ul>
+<div class="nav-pill">
+<a class="nav-cta" href="#" style="; opacity: 0.5; pointer-events: none; cursor: not-allowed;" target="_self" title="Coming Soon">Read Paper <svg fill="none" height="13" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px" viewbox="0 0 24 24" width="13"><path d="M7 17L17 7M17 7H7M17 7v10"></path></svg></a>
+<button aria-expanded="false" aria-label="Toggle menu" class="nav-hamburger" id="navToggle">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24"><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
+</button>
+</div>
+</div>
+</nav>
+<!-- ══ HERO ══════════════════════════════════ -->
+<section class="hero">
+<div class="hero-wrap">
+<div class="hero-left">
+<a class="hero-venue" href="https://ai4space.space/" rel="noopener" target="_blank">
+<div class="venue-dot">✓</div>
+<span>Accepted · 4th AI4Space Workshop · CVPR 2026</span>
+</a>
+<h1>
+<span class="hl">LuMon</span> — Lunar Monocular<br/>Depth Estimation Benchmark
+      </h1>
+<p class="hero-abstract">
+        A comprehensive benchmark and development suite evaluating <strong style="color:var(--silver)">14 state-of-the-art depth models</strong> across <strong style="color:var(--silver)">6 diverse datasets</strong> — spanning synthetic simulations, Earth analog terrain, and real Chang'e-3 mission data. We introduce two novel datasets and reveal fundamental limitations of terrestrial models in the lunar domain.
+      </p>
+<div class="workshop-info">
+<div class="wi-item">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Denver, Colorado · CVPR 2026
+        </div>
+<div class="wi-sep"></div>
+<div class="wi-item">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+          June 3–7, 2026
+        </div>
+<div class="wi-sep"></div>
+<a class="wi-item wi-link" href="https://ai4space.space/" rel="noopener" target="_blank">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+          ai4space.space
+        </a>
+</div>
+<div class="hero-btns">
+<a class="btn btn-blue" href="#" style="; opacity: 0.5; pointer-events: none; cursor: not-allowed;" target="_self" title="Coming Soon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line></svg>
+          Paper PDF
+        </a>
+<a class="btn btn-ghost" href="#" style="; opacity: 0.5; pointer-events: none; cursor: not-allowed;" target="_self" title="Coming Soon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Supplementary
+        </a>
+<a class="btn btn-ghost" href="#videos">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect height="14" rx="2" ry="2" width="15" x="1" y="5"></rect></svg>
+          Watch Results
+        </a>
+</div>
+</div>
+<div class="hero-right">
+<div class="moon-scene">
+<div class="moon-glow"></div>
+<div class="moon-body">
+<div class="crater c1"></div>
+<div class="crater c2"></div>
+<div class="crater c3"></div>
+<div class="crater c4"></div>
+<div class="crater c5"></div>
+</div>
+<div class="moon-ring"></div>
+<div class="moon-ring2"></div>
+<div class="moon-chip mc1">
+<div class="chip-dot" style="background:#7aa4ff"></div>
+          δ₁ = 0.840
+        </div>
+<div class="moon-chip mc2">
+<div class="chip-dot" style="background:#b07aff"></div>
+          DAv2-FT · Best Model
+        </div>
+<div class="moon-chip mc3">
+<div class="chip-dot" style="background:#5ee8f5"></div>
+          Chang'e-3 ✓
+        </div>
+</div>
+</div>
+</div>
+</section>
+<!-- ══ AUTHORS ═══════════════════════════════ -->
+<section class="authors">
+<div class="wrap">
+<div class="author-list">
+<span class="author-name">Aytaç Sekmen*</span>
+<span class="author-name">Fatih Emre Gunes*</span>
+<span class="author-name">Furkan Horoz*</span>
+<span class="author-name">Hüseyin Umut Işık*</span>
+<span class="author-name">Mehmet Alp Ozaydin*</span>
+<span class="author-name">Onur Altay Topaloglu*</span>
+<span class="author-name">Şahin Umutcan Üstündaş*</span>
+<span class="author-name">Yurdasen Alp Yeni*</span>
+<a class="author-name" href="https://scholar.google.com/citations?user=JMGwjD4AAAAJ&amp;hl=en" rel="noopener" target="_blank">Halil Ersin Soken</a>
+<a class="author-name" href="https://scholar.google.com/citations?user=aO-849gAAAAJ&amp;hl=en" rel="noopener" target="_blank">Erol Sahin</a>
+<a class="author-name" href="https://scholar.google.com/citations?user=Za7uka8AAAAJ&amp;hl=en">Ramazan Gokberk Cinbis*</a>
+<a class="author-name" href="https://scholar.google.com/citations?user=yiAWeIAAAAAJ&amp;hl=en" rel="noopener" target="_blank">Sinan Kalkan*</a>
+</div>
+<div class="author-affil">Authors from Middle East Technical University (METU) and associated labs</div>
+</div>
+</section>
+<!-- ══ ABSTRACT ══════════════════════════════ -->
+<section class="sec sec-alt" id="abstract">
+<div class="wrap">
+<div class="sec-head-center">
+<div class="sec-label">Abstract</div>
+<h2 class="sec-h">Overview</h2>
+</div>
+<div class="abstract-box">
+<p>
+        Monocular depth estimation (MDE) is a critical capability for autonomous lunar rovers, enabling safe navigation and mission operations in environments where traditional sensors face severe limitations. The unique challenges of the lunar surface — extreme lighting contrast, featureless regolith, crater geometry, and the absence of an atmosphere — make terrestrial depth models unreliable when transferred directly to the lunar domain.
+      </p>
+<p>
+        We present <strong>LuMon</strong>, a comprehensive benchmarking framework and development suite that systematically evaluates <strong>14 state-of-the-art MDE models</strong> across <strong>6 diverse datasets</strong> spanning synthetic simulations, Earth analog environments, and real lunar mission data. Our benchmark introduces two novel contributions: <strong>LuSNAR</strong>, a high-fidelity synthetic dataset from a Unity-based lunar simulator, and <strong>CHERI</strong>, a dark-analog dataset capturing extreme polar lighting conditions.
+      </p>
+<p>
+        Through comprehensive zero-shot evaluation and domain-specific fine-tuning experiments, we reveal that <strong>metric foundation models consistently outperform relative methods</strong> in the lunar domain, with fine-tuned DepthAnything v2 achieving state-of-the-art performance (δ₁ = 0.84). We identify craters and extreme shading as primary failure modes, characterize scale drift across depth ranges, and demonstrate that Earth analog datasets can be misleading proxies for true lunar performance. All evaluation scripts, fine-tuning code, and dataset tools are released publicly.
+      </p>
+</div>
+</div>
+</section>
+<!-- ══ CONTRIBUTIONS ═════════════════════════ -->
+<section class="sec" id="contributions">
+<div class="wrap">
+<div class="sec-head">
+<div class="sec-label">Contributions</div>
+<h2 class="sec-h">What We Contribute</h2>
+<p class="sec-p">Six concrete contributions advancing the state of lunar autonomous perception research.</p>
+</div>
+<div class="contrib-grid">
+<div class="contrib-card">
+<div aria-hidden="true" class="cc-icon ic-v"><svg fill="none" height="20" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="9"></circle><path d="M15 8a5.5 5.5 0 00-4 9.2A9 9 0 0115 8z" fill="rgba(139,92,246,.2)"></path></svg></div>
+<div class="cc-title">Novel Lunar Datasets</div>
+<div class="cc-desc">LuSNAR (Unity-based synthetic, 1024×1024, dense GT up to 25m) and CHERI (dark polar-analog, extreme high-contrast illumination) fill critical gaps missing in existing lunar benchmarks.</div>
+</div>
+<div class="contrib-card">
+<div aria-hidden="true" class="cc-icon ic-b"><svg fill="none" height="20" stroke="#7aa4ff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><rect height="9" rx="1" width="4" x="3" y="12"></rect><rect height="15" rx="1" width="4" x="10" y="6"></rect><rect height="19" rx="1" width="4" x="17" y="2"></rect></svg></div>
+<div class="cc-title">Comprehensive Zero-Shot Benchmark</div>
+<div class="cc-desc">First systematic evaluation of 14 contemporary MDE architectures — covering both metric and relative paradigms — across 6 datasets without dataset-specific tuning.</div>
+</div>
+<div class="contrib-card">
+<div aria-hidden="true" class="cc-icon ic-c"><svg fill="none" height="20" stroke="#5ee8f5" stroke-width="1.8" viewbox="0 0 24 24" width="20"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="21" y1="16.5" y2="21"></line></svg></div>
+<div class="cc-title">Failure Mode Analysis</div>
+<div class="cc-desc">Region-wise evaluation across craters, rocks, shadows, and flat terrain with scale drift characterization across depth ranges. Reveals concrete model weaknesses for deployment planning.</div>
+</div>
+<div class="contrib-card">
+<div aria-hidden="true" class="cc-icon ic-g"><svg fill="none" height="20" stroke="#5ee8b4" stroke-width="1.8" viewbox="0 0 24 24" width="20"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg></div>
+<div class="cc-title">Downstream Pose Estimation</div>
+<div class="cc-desc">Integrates depth quality metrics with relative pose estimation for rover navigation, bridging the gap between raw accuracy numbers and practical operational utility.</div>
+</div>
+<div class="contrib-card">
+<div aria-hidden="true" class="cc-icon ic-b"><svg fill="none" height="20" stroke="#7aa4ff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
+<div class="cc-title">Open Development Suite</div>
+<div class="cc-desc">Full release of evaluation scripts, LoRA fine-tuning code (334M → 34M parameters), dataset processing tools, multi-GPU inference, and visualization utilities.</div>
+</div>
+<div class="contrib-card">
+<div aria-hidden="true" class="cc-icon ic-v"><svg fill="none" height="20" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+<div class="cc-title">Efficiency Profiling</div>
+<div class="cc-desc">Detailed profiling of FPS, VRAM consumption, and TFLOPs alongside depth accuracy, offering practical deployment guidance for power- and memory-constrained rover hardware.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ══ DATASETS ═══════════════════════════════ -->
+<section class="sec sec-alt" id="datasets">
+<div class="wrap">
+<div class="sec-head">
+<div class="sec-label">Datasets</div>
+<h2 class="sec-h">Benchmark Suite — 6 Datasets</h2>
+<p class="sec-p">From Unity-rendered synthetic terrain to real Chang'e-3 mission imagery, LuMon covers the full spectrum of lunar and analog environments.</p>
+</div>
+<div class="ds-grid">
+<div class="ds-card">
+<div class="ds-top">
+<div class="ds-name">LunarSim</div>
+<span class="tag tag-blue">Synthetic</span>
+</div>
+<div class="ds-body">Physics-based lunar simulation with accurate shadow rendering, crater morphology, and rock distributions. Standard orbital lighting conditions.</div>
+<div class="ds-tags">
+<span class="tag tag-blue">1280×720</span>
+<span class="tag tag-cyan">Dense GT</span>
+<span class="tag tag-blue">50 m max</span>
+</div>
+</div>
+<div class="ds-card" style="border-color: rgba(139,92,246,.25);">
+<div class="ds-top">
+<div class="ds-name">LuSNAR ★</div>
+<span class="tag tag-violet">Novel</span>
+</div>
+<div class="ds-body">Our novel high-fidelity Unity-based synthetic dataset. Features complex crater geometry, realistic regolith textures, and precise depth ground truth at high resolution.</div>
+<div class="ds-tags">
+<span class="tag tag-violet">1024×1024</span>
+<span class="tag tag-cyan">Dense GT</span>
+<span class="tag tag-violet">25 m max</span>
+</div>
+</div>
+<div class="ds-card">
+<div class="ds-top">
+<div class="ds-name">Etna-LRNT</div>
+<span class="tag tag-green">Earth Analog</span>
+</div>
+<div class="ds-body">Volcanic terrain analog with LiDAR-derived sparse ground truth. Reveals why Earth analogs can be deceptive proxies for true lunar performance.</div>
+<div class="ds-tags">
+<span class="tag tag-green">1088×512</span>
+<span class="tag tag-amber">Sparse GT</span>
+<span class="tag tag-green">30 m max</span>
+</div>
+</div>
+<div class="ds-card">
+<div class="ds-top">
+<div class="ds-name">Etna-S3LI</div>
+<span class="tag tag-green">Earth Analog</span>
+</div>
+<div class="ds-body">Stereo-derived dense depth maps from volcanic terrain. Enables precise geometric error analysis of crater rims and rock edges.</div>
+<div class="ds-tags">
+<span class="tag tag-green">1288×512</span>
+<span class="tag tag-cyan">Dense GT</span>
+<span class="tag tag-green">25 m max</span>
+</div>
+</div>
+<div class="ds-card" style="border-color: rgba(139,92,246,.25);">
+<div class="ds-top">
+<div class="ds-name">CHERI ★</div>
+<span class="tag tag-violet">Novel</span>
+</div>
+<div class="ds-body">Our novel dark analog environment with extreme polar lighting. Captures permanently-shadowed region conditions that cause catastrophic failure in relative methods.</div>
+<div class="ds-tags">
+<span class="tag tag-violet">1280×720</span>
+<span class="tag tag-cyan">Dense GT</span>
+<span class="tag tag-violet">17 m max</span>
+</div>
+</div>
+<div class="ds-card" style="border-color: rgba(251,191,36,.2);">
+<div class="ds-top">
+<div class="ds-name">Chang'e-3</div>
+<span class="tag tag-amber">Real Lunar</span>
+</div>
+<div class="ds-body">Authentic lunar surface data from China's Chang'e-3 mission. The only real lunar dataset — the ultimate test of domain transfer from simulation and analogs.</div>
+<div class="ds-tags">
+<span class="tag tag-amber">27 cm/px</span>
+<span class="tag tag-cyan">Dense GT</span>
+<span class="tag tag-amber">25 m max</span>
+</div>
+</div>
+</div>
+<!-- Comparison table -->
+<div class="table-wrap" style="margin-top: 36px;">
+<div class="table-scroll">
+<table>
+<caption class="sr-only">LuMon benchmark dataset comparison</caption>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Domain</th>
+<th>GT Type</th>
+<th>Resolution</th>
+<th>Max Depth</th>
+<th>Lighting</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>LunarSim</td><td>Synthetic</td><td>Dense</td><td>1280×720</td><td>50 m</td><td>Standard</td><td><span class="tag tag-blue">Existing</span></td></tr>
+<tr><td>LuSNAR</td><td>Synthetic</td><td>Dense</td><td>1024×1024</td><td>25 m</td><td>Varied</td><td><span class="tag tag-violet">Novel ★</span></td></tr>
+<tr><td>Etna-LRNT</td><td>Earth Analog</td><td>Sparse (LiDAR)</td><td>1088×512</td><td>30 m</td><td>Natural</td><td><span class="tag tag-green">Existing</span></td></tr>
+<tr><td>Etna-S3LI</td><td>Earth Analog</td><td>Dense (Stereo)</td><td>1288×512</td><td>25 m</td><td>Natural</td><td><span class="tag tag-green">Existing</span></td></tr>
+<tr><td>CHERI</td><td>Dark Analog</td><td>Dense (Stereo)</td><td>1280×720</td><td>17 m</td><td>Extreme</td><td><span class="tag tag-violet">Novel ★</span></td></tr>
+<tr><td>Chang'e-3</td><td>Real Lunar</td><td>Dense (Stereo)</td><td>27 cm/px</td><td>25 m</td><td>Harsh</td><td><span class="tag tag-amber">Mission Data</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- ══ VIDEOS ════════════════════════════════ -->
+<section class="sec" id="videos">
+<div class="wrap">
+<div class="sec-head">
+<div class="sec-label">Qualitative Results</div>
+<h2 class="sec-h">Side-by-Side Model Comparisons</h2>
+<p class="sec-p">All models visualized with consistent depth colormaps. Comparisons reveal stark differences in handling of craters, shadows, and low-texture regions.</p>
+</div>
+<div class="video-grid">
+<!-- Featured -->
+<div class="video-card video-featured">
+<div class="video-wrap">
+<video controls="" loop="" muted="" playsinline="" poster="videos/LunarSim_comparison_poster.jpg" preload="metadata">
+<source src="videos/LunarSim_comparison.mp4" type="video/mp4"/>
+</video>
+</div>
+<div class="video-info">
+<div aria-hidden="true" class="video-badge vb-blue"><svg fill="none" height="18" stroke="#7aa4ff" stroke-width="1.8" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><circle cx="10" cy="10" fill="rgba(79,128,255,.2)" r="3.5"></circle></svg></div>
+<div class="video-meta">
+<h4>LunarSim — Full Model Comparison</h4>
+<p>All 14 evaluated models visualized side-by-side on the LunarSim synthetic dataset. Standard orbital lighting with diverse crater and rock distributions.</p>
+</div>
+</div>
+</div>
+<div class="video-card">
+<div class="video-wrap">
+<video controls="" loop="" muted="" playsinline="" poster="videos/Moon_8_comparison_poster.jpg" preload="metadata">
+<source src="videos/Moon_8_comparison.mp4" type="video/mp4"/>
+</video>
+</div>
+<div class="video-info">
+<div aria-hidden="true" class="video-badge vb-violet"><svg fill="none" height="18" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><path d="M15 8a5.5 5.5 0 00-4 9.2A9 9 0 0115 8z" fill="rgba(139,92,246,.25)"></path></svg></div>
+<div class="video-meta">
+<h4>LuSNAR (Novel Dataset)</h4>
+<p>Our novel high-fidelity synthetic lunar dataset featuring complex terrain geometry with physics-accurate rendering.</p>
+</div>
+</div>
+</div>
+<div class="video-card">
+<div class="video-wrap">
+<video controls="" loop="" muted="" playsinline="" poster="videos/Cheri_comparison_poster.jpg" preload="metadata">
+<source src="videos/Cheri_comparison.mp4" type="video/mp4"/>
+</video>
+</div>
+<div class="video-info">
+<div aria-hidden="true" class="video-badge vb-amber"><svg fill="none" height="18" stroke="#fcd34d" stroke-width="1.8" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg></div>
+<div class="video-meta">
+<h4>CHERI (Novel Dataset)</h4>
+<p>Our novel dark analog dataset with extreme polar lighting — permanently shadowed regions cause catastrophic failure in relative methods.</p>
+</div>
+</div>
+</div>
+<div class="video-card">
+<div class="video-wrap">
+<video controls="" loop="" muted="" playsinline="" poster="videos/Etna_comparison_poster.jpg" preload="metadata">
+<source src="videos/Etna_comparison.mp4" type="video/mp4"/>
+</video>
+</div>
+<div class="video-info">
+<div aria-hidden="true" class="video-badge vb-green"><svg fill="none" height="18" stroke="#5ee8b4" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M12 3L2 21h20L12 3z"></path><path d="M12 3v6" stroke-dasharray="2 2"></path></svg></div>
+<div class="video-meta">
+<h4>Etna-LRNT (Earth Analog)</h4>
+<p>Volcanic terrain with LiDAR ground truth. Demonstrates why analog datasets can be misleading proxies for true lunar performance.</p>
+</div>
+</div>
+</div>
+<div class="video-card">
+<div class="video-wrap">
+<video controls="" loop="" muted="" playsinline="" poster="videos/S3LI_mapping_comparison_poster.jpg" preload="metadata">
+<source src="videos/S3LI_mapping_comparison.mp4" type="video/mp4"/>
+</video>
+</div>
+<div class="video-info">
+<div aria-hidden="true" class="video-badge vb-cyan"><svg fill="none" height="18" stroke="#5ee8f5" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M2 20h20"></path><path d="M5 20v-6l7-10 7 10v6"></path><circle cx="12" cy="9" r="2"></circle></svg></div>
+<div class="video-meta">
+<h4>Etna-S3LI (Stereo Analog)</h4>
+<p>Dense stereo-derived depth maps from volcanic terrain enabling precise geometric error analysis at structural boundaries.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ══ METRICS ═══════════════════════════════ -->
+<section class="sec sec-alt" id="metrics">
+<div class="wrap">
+<div class="sec-head-center">
+<div class="sec-label">Evaluation Framework</div>
+<h2 class="sec-h">11+ Evaluation Metrics</h2>
+<p class="sec-p">Holistic evaluation covering depth quality, structural fidelity, downstream navigation, and computational cost.</p>
+</div>
+<div class="metrics-grid">
+<div class="metric-card">
+<div class="mc-title t-b">Depth Quality</div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>δ₁, δ₂, δ₃</strong> — Threshold accuracy at 1.25×, 1.25²×, 1.25³×</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>A.Rel</strong> — Absolute relative error</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>Sq.Rel</strong> — Squared relative error</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>RMSE</strong> — Root mean squared error (m)</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>MAE</strong> — Mean absolute error (m)</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>SILog</strong> — Scale-invariant log error</span></div>
+</div>
+<div class="metric-card">
+<div class="mc-title t-c">Pose Estimation</div>
+<div class="mi"><div class="mi-dot d-c"></div><span><strong>Median Rotation Error</strong> — Angular pose error (°)</span></div>
+<div class="mi"><div class="mi-dot d-c"></div><span><strong>Median Translation Error</strong> — Positional pose error (m)</span></div>
+<div class="mi"><div class="mi-dot d-c"></div><span><strong>AUC</strong> — Area under pose accuracy curve</span></div>
+<div class="mi"><div class="mi-dot d-c"></div><span>Downstream rover navigation validation</span></div>
+</div>
+<div class="metric-card">
+<div class="mc-title t-g">Efficiency</div>
+<div class="mi"><div class="mi-dot d-g"></div><span><strong>FPS</strong> — Inference speed on standard GPU</span></div>
+<div class="mi"><div class="mi-dot d-g"></div><span><strong>VRAM</strong> — Peak GPU memory footprint (GB)</span></div>
+<div class="mi"><div class="mi-dot d-g"></div><span><strong>TFLOPs</strong> — Computational complexity</span></div>
+<div class="mi"><div class="mi-dot d-g"></div><span>Practical rover deployment analysis</span></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ══ RESULTS ═══════════════════════════════ -->
+<section class="sec sec-alt" id="results">
+<div class="wrap" style="   ">
+<div class="sec-head">
+<div class="sec-label">Results</div>
+<h2 class="sec-h">Quantitative Findings</h2>
+<p class="sec-p">Metric depth models consistently dominate across all evaluation axes, with fine-tuned DAv2 setting the new state-of-the-art.</p>
+</div>
+<div class="findings-row">
+<div class="finding-card">
+<div class="fn fn-b">1.00</div>
+<h4>Peak δ₁ Accuracy</h4>
+<p>DAv2-FT achieves 1.00 threshold accuracy on Etna-S3LI, establishing strong performance across all datasets.</p>
+</div>
+<div class="finding-card">
+<div class="fn fn-v">4.2×</div>
+<h4>Shadow Robustness</h4>
+<p>In shaded extremes (LuSNAR), average metric models outperform base relative methods by over 4× in threshold accuracy.</p>
+</div>
+<div class="finding-card">
+<div class="fn fn-c">0.03</div>
+<h4>Best A.Rel Error</h4>
+<p>Metric-3D v2, UniDepth v2, and MapAnything consistently achieve the lowest A.Rel error of 0.03 on standard terrain.</p>
+</div>
+<div class="finding-card">
+<div class="fn fn-g">15</div>
+<h4>Models Benchmarked</h4>
+<p>MiDaS, DepthAnything v2/3, MapAnything, Marigold, UniDepth, and 10 more methods evaluated.</p>
+</div>
+</div>
+</div><div class="slider-container" id="tableSlider" style="padding: 20px 0; margin: 40px auto; width: 100%; max-width: 1500px;"><button aria-label="Previous Table" class="slider-arrow slider-prev"><svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><polyline points="15 18 9 12 15 6"></polyline></svg></button><button aria-label="Next Table" class="slider-arrow slider-next"><svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><polyline points="9 18 15 12 9 6"></polyline></svg></button><div class="slider-wrapper" id="sliderWrapper"><div class="slider-slide" style="width: 100%; box-sizing: border-box; padding: 0 50px; display: block;"><div class="table-wrap" style="width: 100%; border: none; background: transparent;"><h3 style="color: var(--white); text-align: center; margin-bottom: 20px; font-size: 1.1rem;">Overall Evaluation Across Datasets</h3><div class="table-scroll" style="width: 100%; overflow-x: visible;"><table class="extracted-table"><thead><tr><th rowspan="2">Model</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LunarSim</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LuSNAR</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-LRNT</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-S3LI</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Chang'e-3</th></tr><tr><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th></tr></thead><tbody><tr><td>DAv2-FT(Ours)</td><td class="silver-c">0.84</td><td class="silver-c">0.13</td><td>13.96</td><td class="gold">0.93</td><td class="gold">0.07</td><td class="gold">1.07</td><td class="gold">1.00</td><td>0.05</td><td>0.13</td><td>0.84</td><td>0.13</td><td>1.30</td><td>0.92</td><td>0.08</td><td>0.70</td></tr><tr><td>DepthAnything v2</td><td>0.56</td><td>0.26</td><td>15.18</td><td>0.31</td><td>0.45</td><td>2.89</td><td class="gold">1.00</td><td>0.06</td><td>0.15</td><td>0.88</td><td>0.12</td><td>1.22</td><td class="silver-c">0.95</td><td class="silver-c">0.06</td><td>0.56</td></tr><tr><td>DepthAnything3</td><td>0.63</td><td>0.22</td><td>14.15</td><td>0.53</td><td>0.29</td><td>1.99</td><td class="silver-c">1.00</td><td>0.04</td><td>0.11</td><td class="gold">0.91</td><td class="gold">0.10</td><td>1.12</td><td class="gold">0.96</td><td class="gold">0.05</td><td class="silver-c">0.44</td></tr><tr><td>MoGe-2</td><td>0.77</td><td>0.15</td><td>12.17</td><td>0.53</td><td>0.29</td><td>1.80</td><td>0.99</td><td>0.05</td><td>0.15</td><td class="gold">0.91</td><td class="gold">0.10</td><td class="silver-c">1.08</td><td>0.95</td><td>0.06</td><td>0.45</td></tr><tr><td>DepthPro</td><td>0.50</td><td>0.29</td><td>17.57</td><td>0.33</td><td>0.45</td><td>2.70</td><td>0.73</td><td>241.71</td><td>450.05</td><td>0.89</td><td>0.11</td><td>1.11</td><td>0.89</td><td>0.10</td><td>0.89</td></tr><tr><td>Metric-3D v2</td><td>0.75</td><td>0.16</td><td>12.53</td><td>0.61</td><td>0.25</td><td>1.71</td><td>1.00</td><td class="gold">0.03</td><td>0.10</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.95</td><td class="gold">0.05</td><td class="gold">0.43</td></tr><tr><td>UniDepth v2</td><td>0.76</td><td>0.21</td><td>16.16</td><td>0.63</td><td>0.26</td><td>2.14</td><td>1.00</td><td class="gold">0.03</td><td class="gold">0.07</td><td>0.87</td><td>0.12</td><td>1.20</td><td>0.94</td><td>0.07</td><td>0.54</td></tr><tr><td>MapAnything</td><td class="gold">0.86</td><td class="gold">0.11</td><td class="gold">10.73</td><td>0.74</td><td>0.17</td><td class="silver-c">1.53</td><td>1.00</td><td class="silver-c">0.03</td><td class="silver-c">0.08</td><td class="silver-c">0.91</td><td class="silver-c">0.10</td><td class="gold">1.05</td><td>0.95</td><td>0.07</td><td>0.52</td></tr><tr><td>VDA</td><td>0.75</td><td>0.16</td><td>13.94</td><td>0.77</td><td>0.17</td><td>2.05</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.83</td><td>0.14</td><td>1.34</td><td>0.93</td><td>0.08</td><td>0.68</td></tr><tr><td>MetricAnything</td><td>0.79</td><td>0.15</td><td class="silver-c">12.08</td><td>0.51</td><td>0.30</td><td>1.83</td><td>0.98</td><td>0.07</td><td>0.22</td><td>0.91</td><td>0.10</td><td class="gold">1.05</td><td>0.95</td><td>0.06</td><td>0.44</td></tr><tr><td>DepthAnything-AC</td><td>0.70</td><td>0.28</td><td>19.12</td><td>0.70</td><td>0.26</td><td>2.63</td><td>1.00</td><td>0.05</td><td>0.12</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.66</td><td>0.22</td><td>1.55</td></tr><tr><td>DepthCrafter</td><td>0.40</td><td>0.37</td><td>20.28</td><td>0.41</td><td>0.47</td><td>2.96</td><td>0.92</td><td>0.10</td><td>0.28</td><td>0.80</td><td>0.15</td><td>1.44</td><td>0.87</td><td>0.13</td><td>1.05</td></tr><tr><td>Lotus</td><td>0.59</td><td>0.27</td><td>20.43</td><td>0.36</td><td>0.44</td><td>3.08</td><td>0.65</td><td>0.19</td><td>0.49</td><td>0.80</td><td>0.15</td><td>1.45</td><td>0.70</td><td>0.19</td><td>1.64</td></tr><tr><td>MiDaS v3.1</td><td>0.78</td><td>0.17</td><td>14.97</td><td class="silver-c">0.81</td><td class="silver-c">0.13</td><td>1.68</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.89</td><td>0.11</td><td>1.15</td><td>0.81</td><td>0.15</td><td>1.12</td></tr><tr><td>Marigold</td><td>0.67</td><td>0.21</td><td>17.25</td><td>0.62</td><td>0.24</td><td>2.02</td><td>0.94</td><td>0.10</td><td>0.27</td><td>0.86</td><td>0.12</td><td>1.26</td><td>0.91</td><td>0.09</td><td>0.69</td></tr></tbody></table></div></div></div><div class="slider-slide" style="width: 100%; box-sizing: border-box; padding: 0 50px; display: block;"><div class="table-wrap" style="width: 100%; border: none; background: transparent;"><h3 style="color: var(--white); text-align: center; margin-bottom: 20px; font-size: 1.1rem;">Evaluation on Shaded Regions</h3><div class="table-scroll" style="width: 100%; overflow-x: visible;"><table class="extracted-table"><thead><tr><th rowspan="2">Model</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LunarSim</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LuSNAR</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-LRNT</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-S3LI</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Chang'e-3</th></tr><tr><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th></tr></thead><tbody><tr><td>DAv2-FT(Ours)</td><td class="silver-c">0.79</td><td class="silver-c">0.15</td><td>15.10</td><td class="gold">0.84</td><td class="gold">0.11</td><td class="gold">0.95</td><td class="gold">1.00</td><td>0.06</td><td>0.10</td><td>0.46</td><td>0.29</td><td>2.88</td><td>0.89</td><td>0.10</td><td>0.73</td></tr><tr><td>DepthAnything v2</td><td>0.47</td><td>0.29</td><td>16.39</td><td>0.20</td><td>0.66</td><td>2.86</td><td>0.99</td><td>0.07</td><td>0.12</td><td>0.51</td><td>0.33</td><td>2.85</td><td class="gold">0.94</td><td>0.07</td><td>0.59</td></tr><tr><td>DepthAnything3</td><td>0.54</td><td>0.26</td><td>15.77</td><td>0.34</td><td>0.40</td><td>2.15</td><td class="gold">1.00</td><td class="silver-c">0.05</td><td>0.07</td><td>0.53</td><td>0.46</td><td>3.58</td><td class="gold">0.94</td><td class="gold">0.06</td><td class="silver-c">0.45</td></tr><tr><td>MoGe-2</td><td>0.68</td><td>0.18</td><td>14.42</td><td>0.35</td><td>0.41</td><td>1.90</td><td>0.99</td><td>0.05</td><td>0.08</td><td>0.56</td><td>0.38</td><td>3.22</td><td>0.93</td><td>0.07</td><td>0.46</td></tr><tr><td>DepthPro</td><td>0.38</td><td>0.35</td><td>21.33</td><td>0.23</td><td>0.68</td><td>2.83</td><td>0.39</td><td>559.37</td><td>818.97</td><td>0.59</td><td>0.25</td><td>2.36</td><td>0.85</td><td>0.11</td><td>0.87</td></tr><tr><td>Metric-3D v2</td><td>0.62</td><td>0.20</td><td>14.35</td><td>0.39</td><td>0.38</td><td>1.92</td><td class="silver-c">1.00</td><td>0.05</td><td>0.07</td><td>0.68</td><td>0.23</td><td>2.35</td><td class="silver-c">0.94</td><td class="gold">0.06</td><td class="gold">0.44</td></tr><tr><td>UniDepth v2</td><td>0.70</td><td>0.23</td><td>24.12</td><td>0.45</td><td>0.36</td><td>2.85</td><td>1.00</td><td class="gold">0.03</td><td class="silver-c">0.05</td><td>0.75</td><td class="silver-c">0.17</td><td>1.90</td><td>0.92</td><td>0.08</td><td>0.54</td></tr><tr><td>MapAnything</td><td class="gold">0.80</td><td class="gold">0.13</td><td class="gold">11.48</td><td>0.60</td><td>0.22</td><td class="silver-c">1.64</td><td>1.00</td><td class="gold">0.03</td><td class="gold">0.04</td><td class="gold">0.80</td><td class="gold">0.15</td><td class="gold">1.63</td><td>0.93</td><td>0.08</td><td>0.55</td></tr><tr><td>VDA</td><td>0.66</td><td>0.19</td><td>16.31</td><td class="silver-c">0.65</td><td>0.23</td><td>2.19</td><td>1.00</td><td>0.06</td><td>0.09</td><td>0.48</td><td>0.28</td><td>2.61</td><td>0.90</td><td>0.10</td><td>0.68</td></tr><tr><td>MetricAnything</td><td>0.74</td><td>0.16</td><td class="silver-c">13.19</td><td>0.32</td><td>0.42</td><td>2.00</td><td>0.99</td><td>0.07</td><td>0.12</td><td>0.68</td><td>0.23</td><td>2.22</td><td>0.94</td><td class="silver-c">0.06</td><td>0.46</td></tr><tr><td>DepthAnything-AC</td><td>0.63</td><td>0.33</td><td>27.04</td><td>0.54</td><td>0.38</td><td>3.80</td><td>1.00</td><td>0.09</td><td>0.13</td><td>0.62</td><td>0.20</td><td>2.13</td><td>0.58</td><td>0.26</td><td>1.68</td></tr><tr><td>DepthCrafter</td><td>0.37</td><td>0.45</td><td>22.22</td><td>0.28</td><td>0.81</td><td>3.17</td><td>0.89</td><td>0.11</td><td>0.18</td><td>0.46</td><td>0.38</td><td>3.33</td><td>0.83</td><td>0.14</td><td>1.11</td></tr><tr><td>Lotus</td><td>0.46</td><td>0.32</td><td>29.36</td><td>0.28</td><td>0.64</td><td>3.94</td><td>0.45</td><td>0.29</td><td>0.42</td><td>0.48</td><td>0.32</td><td>3.17</td><td>0.63</td><td>0.23</td><td>1.81</td></tr><tr><td>MiDaS v3.1</td><td>0.73</td><td>0.19</td><td>16.70</td><td>0.64</td><td class="silver-c">0.20</td><td>1.99</td><td>0.99</td><td>0.07</td><td>0.10</td><td class="silver-c">0.79</td><td class="gold">0.15</td><td class="silver-c">1.75</td><td>0.74</td><td>0.18</td><td>1.17</td></tr><tr><td>Marigold</td><td>0.51</td><td>0.29</td><td>21.92</td><td>0.43</td><td>0.37</td><td>2.40</td><td>0.90</td><td>0.11</td><td>0.17</td><td>0.49</td><td>0.35</td><td>3.21</td><td>0.89</td><td>0.10</td><td>0.72</td></tr></tbody></table></div></div></div></div><div class="slider-dots" id="sliderDots" style="margin-top: 20px;"><div class="slider-dot active" data-index="0"></div><div class="slider-dot" data-index="1"></div></div></div><p class="table-note">↑ higher is better, ↓ lower is better. <span class="gold">Gold</span> indicates best, <span class="silver-c">Silver</span> indicates second best.</p>
+
+</section>
+<!-- ══ CHALLENGES ════════════════════════════ -->
+<section class="sec" id="challenges">
+<div class="wrap">
+<div class="sec-head-center">
+<div class="sec-label">Failure Analysis</div>
+<h2 class="sec-h">Key Challenges for Lunar Deployment</h2>
+<p class="sec-p">Region-wise analysis identifies primary failure modes and their relative severity for autonomous rover depth perception.</p>
+</div>
+<div class="challenge-grid">
+<div class="ch-card">
+<span aria-hidden="true" class="ch-icon"><svg fill="none" height="28" stroke="#f87171" stroke-width="1.5" viewbox="0 0 24 24" width="28"><ellipse cx="12" cy="14" rx="9" ry="5"></ellipse><path d="M6 14c0-3 2.7-7 6-7s6 4 6 7" stroke-dasharray="3 2"></path></svg></span>
+<div class="ch-title">Crater Geometry</div>
+<div class="ch-desc">Sharp depth discontinuities at crater rims and concave interiors cause 2.05× error increase. Models lack lunar-specific geometric priors for these non-terrestrial shapes.</div>
+<div class="sev-bar"><div class="sev-fill" style="width:95%; background:linear-gradient(90deg,#ef4444,#dc2626)"></div></div>
+</div>
+<div class="ch-card">
+<span aria-hidden="true" class="ch-icon"><svg fill="none" height="28" stroke="#fb923c" stroke-width="1.5" viewbox="0 0 24 24" width="28"><circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 010 18" fill="rgba(251,146,60,.15)"></path></svg></span>
+<div class="ch-title">Extreme Shadows</div>
+<div class="ch-desc">Permanent polar shadows cause catastrophic failure in relative methods. Metric models maintain 2–3× better robustness. CHERI dataset specifically targets this failure mode.</div>
+<div class="sev-bar"><div class="sev-fill" style="width:85%; background:linear-gradient(90deg,#f97316,#ea580c)"></div></div>
+</div>
+<div class="ch-card">
+<span aria-hidden="true" class="ch-icon"><svg fill="none" height="28" stroke="#eab308" stroke-width="1.5" viewbox="0 0 24 24" width="28"><path d="M5 20l3-8 4 3 4-7 3 12H5z"></path></svg></span>
+<div class="ch-title">Rock &amp; Boulder Fields</div>
+<div class="ch-desc">Scattered boulders create complex occlusion and high-frequency depth variations that challenge standard encoder architectures trained primarily on structured terrestrial scenes.</div>
+<div class="sev-bar"><div class="sev-fill" style="width:70%; background:linear-gradient(90deg,#eab308,#ca8a04)"></div></div>
+</div>
+<div class="ch-card">
+<span aria-hidden="true" class="ch-icon"><svg fill="none" height="28" stroke="#a78bfa" stroke-width="1.5" viewbox="0 0 24 24" width="28"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline><polyline points="16 17 22 17 22 11"></polyline></svg></span>
+<div class="ch-title">Scale Drift</div>
+<div class="ch-desc">Models show non-linear depth distortion across distance ranges. Performance degrades progressively beyond 15m without domain-specific fine-tuning on lunar data.</div>
+<div class="sev-bar"><div class="sev-fill" style="width:78%; background:linear-gradient(90deg,#a78bfa,#7c3aed)"></div></div>
+</div>
+<div class="ch-card">
+<span aria-hidden="true" class="ch-icon"><svg fill="none" height="28" stroke="#38bdf8" stroke-width="1.5" viewbox="0 0 24 24" width="28"><path d="M2 17h20"></path><path d="M4 13h16" stroke-dasharray="4 3"></path><path d="M6 9h12" stroke-dasharray="2 3"></path></svg></span>
+<div class="ch-title">Low-Texture Regolith</div>
+<div class="ch-desc">Featureless lunar soil provides minimal photometric cues. Models must rely on shading gradients that break down under oblique, high-contrast lunar illumination.</div>
+<div class="sev-bar"><div class="sev-fill" style="width:60%; background:linear-gradient(90deg,#38bdf8,#0ea5e9)"></div></div>
+</div>
+<div class="ch-card">
+<span aria-hidden="true" class="ch-icon"><svg fill="none" height="28" stroke="#34d399" stroke-width="1.5" viewbox="0 0 24 24" width="28"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 014-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 01-4 4H3"></path></svg></span>
+<div class="ch-title">Domain Transfer Gap</div>
+<div class="ch-desc">Sim-to-real transfer remains limited. Earth analog datasets (Etna) show deceptively good performance that fails to generalize to actual lunar imagery (Chang'e-3).</div>
+<div class="sev-bar"><div class="sev-fill" style="width:80%; background:linear-gradient(90deg,#34d399,#059669)"></div></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ══ CITATION ═════════════════════════════ -->
+<section class="sec bibtex-section" id="citation">
+<div class="wrap">
+<div class="sec-head-center">
+<div class="sec-label">Citation</div>
+<h2 class="sec-h">BibTeX</h2>
+<p class="sec-p">If you find LuMon useful in your research, please consider citing our work.</p>
+</div>
+<div class="bib-box">
+<div class="bib-header">
+<span>bibtex</span>
+<button aria-label="Copy BibTeX to clipboard" class="bib-copy" id="bibCopy">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="13" rx="2" width="13" x="9" y="9"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>
+          Copy
+        </button>
+</div>
+<pre class="bib-pre" id="bibText">@inproceedings{sekmen2026lumon,
+  title={LuMon: A Comprehensive Benchmark and Development Suite with Novel Datasets for Lunar Monocular Depth Estimation},
+  author={Aytac Sekmen and Fatih Gunes and Furkan Horoz and Umut Isik and Alp Ozaydin and Altay Topaloglu and Umutcan Ustundas and Alp Yeni and Ersin Soken and Erol Sahin and Gokberk Cinbis and Sinan Kalkan},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
+  year={2026}
+}</pre>
+</div>
+</div>
+</section>
+<!-- ══ FOOTER ════════════════════════════════ -->
+<footer>
+<div class="footer-inner">
+<div class="footer-brand">
+<div aria-hidden="true" class="footer-brand-icon"><svg fill="none" height="16" stroke="#fff" stroke-width="1.5" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><circle cx="10" cy="10" fill="rgba(255,255,255,.2)" r="3"></circle><circle cx="15" cy="14" fill="rgba(255,255,255,.15)" r="1.5"></circle></svg></div>
+<div class="footer-brand-text">LuMon · AI4Space @ CVPR 2026</div>
+</div>
+<div class="footer-links">
+<a href="https://ai4space.space/" rel="noopener" style="color:#5ee8b4" target="_blank">AI4Space Workshop ↗</a>
+<a href="#" style="; opacity: 0.5; pointer-events: none; cursor: not-allowed;" target="_self" title="Coming Soon">Paper PDF</a>
+<a href="#" style="; opacity: 0.5; pointer-events: none; cursor: not-allowed;" target="_self" title="Coming Soon">Appendix</a>
+<a href="#abstract">Abstract</a>
+<a href="#datasets">Datasets</a>
+<a href="#videos">Videos</a>
+<a href="#results">Results</a>
+<a href="#citation">Cite</a>
+</div>
+<div class="footer-copy">Accepted · 4th AI4Space Workshop · CVPR 2026 · Denver</div>
+</div>
+</footer>
+<script>
+  // Hamburger menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  // Close menu on link click
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Active nav highlighting via IntersectionObserver
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('#navLinks a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navAnchors.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector('#navLinks a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  
+  // Table Slider Logic
+  const wrapper = document.getElementById('sliderWrapper');
+  const prevBtn = document.querySelector('.slider-prev');
+  const nextBtn = document.querySelector('.slider-next');
+  if (wrapper && prevBtn && nextBtn) {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slider-slide');
+    const totalSlides = slides.length;
+
+    function updateSlider() {
+      wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+      const allDots = document.querySelectorAll('.slider-dot');
+      if (allDots.length > 0) {
+        allDots.forEach(d => d.classList.remove('active'));
+        if (allDots[currentSlide]) allDots[currentSlide].classList.add('active');
+      }
+    }
+    
+    // Also bind dots clicks
+    const allDots = document.querySelectorAll('.slider-dot');
+    allDots.forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        currentSlide = parseInt(e.target.dataset.index);
+        updateSlider();
+      });
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+    });
+  }
+
+  // BibTeX copy
+  document.getElementById('bibCopy').addEventListener('click', function() {
+    const text = document.getElementById('bibText').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      this.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+      setTimeout(() => {
+        this.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy';
+      }, 2000);
+    });
+  });
+</script>
+</body>
+</html>
