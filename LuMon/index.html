@@ -22,7 +22,13 @@
        RESET & BASE
     ════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      overflow-x: hidden;
+      max-width: 100%;
+      overscroll-behavior-x: none;
+    }
 
     :root {
       --navy:    #080c18;
@@ -51,6 +57,8 @@
       color: var(--silver);
       line-height: 1.65;
       overflow-x: hidden;
+      max-width: 100%;
+      overscroll-behavior-x: none;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -187,6 +195,7 @@
       display: flex;
       align-items: center;
       padding: 120px 32px 80px;
+      overflow-x: hidden;
     }
 
     /* Ambient glows */
