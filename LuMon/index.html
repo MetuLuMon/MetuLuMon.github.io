@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>LuMon — Lunar Monocular Depth Estimation Benchmark · AI4Space @ CVPR 2026</title>
-<meta content="LuMon: A comprehensive benchmark evaluating 14 depth estimation models across 6 lunar and analog datasets. Accepted at the 4th AI4Space Workshop, CVPR 2026." name="description"/>
+<meta content="LuMon: Lunar MDE benchmark with novel Chang'e-3 stereo ground truth and CHERI dark-analog data; 14 models across 6 datasets including external LuSNAR. AI4Space @ CVPR 2026." name="description"/>
 <meta content="LuMon — Lunar Monocular Depth Estimation Benchmark" property="og:title"/>
-<meta content="Comprehensive benchmark evaluating 14 depth models across 6 lunar datasets. Two novel datasets, failure analysis, and open-source tools. AI4Space @ CVPR 2026." property="og:description"/>
+<meta content="Benchmark for lunar MDE: novel Chang'e-3 depth &amp; CHERI dataset, plus evaluation on LunarSim, LuSNAR (external), Etna, and more. AI4Space @ CVPR 2026." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="videos/LunarSim_comparison_poster.jpg" property="og:image"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="LuMon — Lunar Monocular Depth Estimation Benchmark" name="twitter:title"/>
-<meta content="14 depth models, 6 lunar datasets, 2 novel contributions. Accepted at AI4Space @ CVPR 2026." name="twitter:description"/>
+<meta content="Chang'e-3 stereo GT, CHERI analog, 14 models, 6 datasets (LuSNAR via official repo). AI4Space @ CVPR 2026." name="twitter:description"/>
 <meta content="videos/LunarSim_comparison_poster.jpg" name="twitter:image"/>
 <link href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;circle cx='16' cy='16' r='15' fill='%23080c18' stroke='%234f80ff' stroke-width='1.5'/&gt;&lt;circle cx='14' cy='14' r='11' fill='%23b0b0b0'/&gt;&lt;circle cx='14' cy='14' r='11' fill='url(%23g)'/&gt;&lt;circle cx='17' cy='12' r='3.5' fill='rgba(0,0,0,0.3)'/&gt;&lt;circle cx='11' cy='17' r='2' fill='rgba(0,0,0,0.25)'/&gt;&lt;circle cx='16' cy='19' r='1.2' fill='rgba(0,0,0,0.2)'/&gt;&lt;defs&gt;&lt;radialGradient id='g' cx='0.35' cy='0.35'&gt;&lt;stop offset='0%25' stop-color='%23d8d8d8'/&gt;&lt;stop offset='60%25' stop-color='%23888'/&gt;&lt;stop offset='100%25' stop-color='%23222'/&gt;&lt;/radialGradient&gt;&lt;/defs&gt;&lt;/svg&gt;" rel="icon" type="image/svg+xml"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -1296,7 +1296,7 @@
 <span class="hl">LuMon</span> — Lunar Monocular<br/>Depth Estimation Benchmark
       </h1>
 <p class="hero-abstract">
-        A comprehensive benchmark and development suite evaluating <strong style="color:var(--silver)">14 state-of-the-art depth models</strong> across <strong style="color:var(--silver)">6 diverse datasets</strong> — spanning synthetic simulations, Earth analog terrain, and real Chang'e-3 mission data. We introduce two novel datasets and reveal fundamental limitations of terrestrial models in the lunar domain.
+        A comprehensive benchmark and development suite evaluating <strong style="color:var(--silver)">14 state-of-the-art depth models</strong> across <strong style="color:var(--silver)">6 diverse datasets</strong>. We introduce stereo ground truth for <strong style="color:var(--silver)">Chang'e-3</strong> and the <strong style="color:var(--silver)">CHERI</strong> dark-analog suite, and benchmark against external simulators including <strong style="color:var(--silver)">LuSNAR</strong> (Liu et al.).
       </p>
 <div class="workshop-info">
 <div class="wi-item">
@@ -1374,7 +1374,7 @@
 <a class="author-name" href="https://scholar.google.com/citations?user=Za7uka8AAAAJ&amp;hl=en">Ramazan Gokberk Cinbis*</a>
 <a class="author-name" href="https://scholar.google.com/citations?user=yiAWeIAAAAAJ&amp;hl=en" rel="noopener" target="_blank">Sinan Kalkan*</a>
 </div>
-<div class="author-affil">Authors from Middle East Technical University (METU) and associated labs</div>
+<div class="author-affil">¹Department of Computer Engineering · ²Department of Aerospace Engineering · ³ROMER — Middle East Technical University (METU), Ankara, Türkiye</div>
 </div>
 </section>
 <!-- ══ ABSTRACT ══════════════════════════════ -->
@@ -1389,7 +1389,7 @@
         Monocular depth estimation (MDE) is a critical capability for autonomous lunar rovers, enabling safe navigation and mission operations in environments where traditional sensors face severe limitations. The unique challenges of the lunar surface — extreme lighting contrast, featureless regolith, crater geometry, and the absence of an atmosphere — make terrestrial depth models unreliable when transferred directly to the lunar domain.
       </p>
 <p>
-        We present <strong>LuMon</strong>, a comprehensive benchmarking framework and development suite that systematically evaluates <strong>14 state-of-the-art MDE models</strong> across <strong>6 diverse datasets</strong> spanning synthetic simulations, Earth analog environments, and real lunar mission data. Our benchmark introduces two novel contributions: <strong>LuSNAR</strong>, a high-fidelity synthetic dataset from a Unity-based lunar simulator, and <strong>CHERI</strong>, a dark-analog dataset capturing extreme polar lighting conditions.
+        We present <strong>LuMon</strong>, a comprehensive benchmarking framework and development suite that systematically evaluates <strong>14 state-of-the-art MDE models</strong> across <strong>6 diverse datasets</strong> spanning synthetic simulations, Earth analog environments, and real lunar mission data. We introduce novel stereo ground-truth depth for authentic <strong>Chang'e-3</strong> mission imagery and the <strong>CHERI</strong> dark-analog dataset. <strong>LuSNAR</strong> is an external photorealistic simulator benchmark (Liu et al.; Unreal Engine) used for evaluation — see the <a href="https://github.com/zqyu9/LuSNAR-dataset" rel="noopener" target="_blank">official LuSNAR dataset repository</a>.
       </p>
 <p>
         Through comprehensive zero-shot evaluation and domain-specific fine-tuning experiments, we reveal that <strong>metric foundation models consistently outperform relative methods</strong> in the lunar domain, with fine-tuned DepthAnything v2 achieving state-of-the-art performance (δ₁ = 0.84). We identify craters and extreme shading as primary failure modes, characterize scale drift across depth ranges, and demonstrate that Earth analog datasets can be misleading proxies for true lunar performance. All evaluation scripts, fine-tuning code, and dataset tools are released publicly.
@@ -1409,7 +1409,7 @@
 <div class="contrib-card">
 <div aria-hidden="true" class="cc-icon ic-v"><svg fill="none" height="20" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="9"></circle><path d="M15 8a5.5 5.5 0 00-4 9.2A9 9 0 0115 8z" fill="rgba(139,92,246,.2)"></path></svg></div>
 <div class="cc-title">Novel Lunar Datasets</div>
-<div class="cc-desc">LuSNAR (Unity-based synthetic, 1024×1024, dense GT up to 25m) and CHERI (dark polar-analog, extreme high-contrast illumination) fill critical gaps missing in existing lunar benchmarks.</div>
+<div class="cc-desc">Stereo ground-truth depth for real <strong>Chang'e-3</strong> imagery and the novel <strong>CHERI</strong> dark-analog dataset (extreme polar-style lighting). We also benchmark against the external <strong>LuSNAR</strong> simulator suite (Liu et al.; Unreal Engine) — not contributed by this work; see the <a href="https://github.com/zqyu9/LuSNAR-dataset" rel="noopener" target="_blank">official LuSNAR repo</a>.</div>
 </div>
 <div class="contrib-card">
 <div aria-hidden="true" class="cc-icon ic-b"><svg fill="none" height="20" stroke="#7aa4ff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><rect height="9" rx="1" width="4" x="3" y="12"></rect><rect height="15" rx="1" width="4" x="10" y="6"></rect><rect height="19" rx="1" width="4" x="17" y="2"></rect></svg></div>
@@ -1445,7 +1445,7 @@
 <div class="sec-head">
 <div class="sec-label">Datasets</div>
 <h2 class="sec-h">Benchmark Suite — 6 Datasets</h2>
-<p class="sec-p">From Unity-rendered synthetic terrain to real Chang'e-3 mission imagery, LuMon covers the full spectrum of lunar and analog environments.</p>
+<p class="sec-p">From simulation and Earth analogs to real Chang'e-3 mission imagery, LuMon aggregates six datasets for cross-domain lunar MDE evaluation.</p>
 </div>
 <div class="ds-grid">
 <div class="ds-card">
@@ -1460,16 +1460,16 @@
 <span class="tag tag-blue">50 m max</span>
 </div>
 </div>
-<div class="ds-card" style="border-color: rgba(139,92,246,.25);">
+<div class="ds-card">
 <div class="ds-top">
-<div class="ds-name">LuSNAR ★</div>
-<span class="tag tag-violet">Novel</span>
+<div class="ds-name">LuSNAR</div>
+<span class="tag tag-blue">External benchmark</span>
 </div>
-<div class="ds-body">Our novel high-fidelity Unity-based synthetic dataset. Features complex crater geometry, realistic regolith textures, and precise depth ground truth at high resolution.</div>
+<div class="ds-body">Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks. We evaluate on it but do not distribute it — use the <a href="https://github.com/zqyu9/LuSNAR-dataset" rel="noopener" style="color:#7aa4ff" target="_blank">official LuSNAR repository ↗</a>.</div>
 <div class="ds-tags">
 <span class="tag tag-violet">1024×1024</span>
 <span class="tag tag-cyan">Dense GT</span>
-<span class="tag tag-violet">25 m max</span>
+<span class="tag tag-violet">Seg. masks</span>
 </div>
 </div>
 <div class="ds-card">
@@ -1539,7 +1539,7 @@
 </thead>
 <tbody>
 <tr><td>LunarSim</td><td>Synthetic</td><td>Dense</td><td>1280×720</td><td>50 m</td><td>Standard</td><td><span class="tag tag-blue">Existing</span></td></tr>
-<tr><td>LuSNAR</td><td>Synthetic</td><td>Dense</td><td>1024×1024</td><td>25 m</td><td>Varied</td><td><span class="tag tag-violet">Novel ★</span></td></tr>
+<tr><td>LuSNAR</td><td>Synthetic</td><td>Dense</td><td>1024×1024</td><td>50 m</td><td>Varied</td><td><span class="tag tag-blue">External</span> <a href="https://github.com/zqyu9/LuSNAR-dataset" rel="noopener" style="color:#7aa4ff;font-size:.72rem" target="_blank">repo ↗</a></td></tr>
 <tr><td>Etna-LRNT</td><td>Earth Analog</td><td>Sparse (LiDAR)</td><td>1088×512</td><td>30 m</td><td>Natural</td><td><span class="tag tag-green">Existing</span></td></tr>
 <tr><td>Etna-S3LI</td><td>Earth Analog</td><td>Dense (Stereo)</td><td>1288×512</td><td>25 m</td><td>Natural</td><td><span class="tag tag-green">Existing</span></td></tr>
 <tr><td>CHERI</td><td>Dark Analog</td><td>Dense (Stereo)</td><td>1280×720</td><td>17 m</td><td>Extreme</td><td><span class="tag tag-violet">Novel ★</span></td></tr>
@@ -1583,8 +1583,8 @@
 <div class="video-info">
 <div aria-hidden="true" class="video-badge vb-violet"><svg fill="none" height="18" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><path d="M15 8a5.5 5.5 0 00-4 9.2A9 9 0 0115 8z" fill="rgba(139,92,246,.25)"></path></svg></div>
 <div class="video-meta">
-<h4>LuSNAR (Novel Dataset)</h4>
-<p>Our novel high-fidelity synthetic lunar dataset featuring complex terrain geometry with physics-accurate rendering.</p>
+<h4>LuSNAR (External Dataset)</h4>
+<p>Photorealistic Unreal Engine simulator benchmark (Liu et al.). We report results on LuSNAR’s test split; download and terms are from the <a href="https://github.com/zqyu9/LuSNAR-dataset" rel="noopener" style="color:#7aa4ff" target="_blank">official LuSNAR dataset repository ↗</a>.</p>
 </div>
 </div>
 </div>
