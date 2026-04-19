@@ -1111,17 +1111,48 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 6px 20px;
-      margin-bottom: 6px;
+      gap: 4px 14px;
+      margin-bottom: 12px;
+      max-width: 920px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .author-name {
+    .author-entry {
+      display: inline;
       font-size: .9rem;
       font-weight: 600;
       color: var(--silver);
     }
+    .author-entry .author-name {
+      font-size: inherit;
+      font-weight: 600;
+      color: var(--silver);
+    }
+    .author-entry sup {
+      font-size: .72em;
+      font-weight: 600;
+      color: var(--silver);
+      vertical-align: super;
+      line-height: 0;
+      margin-left: 2px;
+      letter-spacing: 0.02em;
+    }
+    .author-affil-block {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
     .author-affil {
       font-size: .78rem;
       color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+    .author-footnotes {
+      font-size: .72rem;
+      color: var(--faint);
+      line-height: 1.6;
+      margin: 0;
     }
 
     /* bibtex */
@@ -1361,20 +1392,23 @@
 <section class="authors">
 <div class="wrap">
 <div class="author-list">
-<span class="author-name">Aytaç Sekmen*</span>
-<span class="author-name">Fatih Emre Gunes*</span>
-<span class="author-name">Furkan Horoz*</span>
-<span class="author-name">Hüseyin Umut Işık*</span>
-<span class="author-name">Mehmet Alp Ozaydin*</span>
-<span class="author-name">Onur Altay Topaloglu*</span>
-<span class="author-name">Şahin Umutcan Üstündaş*</span>
-<span class="author-name">Yurdasen Alp Yeni*</span>
-<a class="author-name" href="https://scholar.google.com/citations?user=JMGwjD4AAAAJ&amp;hl=en" rel="noopener" target="_blank">Halil Ersin Soken</a>
-<a class="author-name" href="https://scholar.google.com/citations?user=aO-849gAAAAJ&amp;hl=en" rel="noopener" target="_blank">Erol Sahin</a>
-<a class="author-name" href="https://scholar.google.com/citations?user=Za7uka8AAAAJ&amp;hl=en">Ramazan Gokberk Cinbis*</a>
-<a class="author-name" href="https://scholar.google.com/citations?user=yiAWeIAAAAAJ&amp;hl=en" rel="noopener" target="_blank">Sinan Kalkan*</a>
+<span class="author-entry">Aytaç Sekmen<sup>1,3,♥</sup></span>
+<span class="author-entry">Fatih Emre Gunes<sup>1,3,♥</sup></span>
+<span class="author-entry">Furkan Horoz<sup>1,3,♥</sup></span>
+<span class="author-entry">Hüseyin Umut Işık<sup>1,3,♥</sup></span>
+<span class="author-entry">Mehmet Alp Ozaydin<sup>1,3,♥</sup></span>
+<span class="author-entry">Onur Altay Topaloglu<sup>1,3,♥</sup></span>
+<span class="author-entry">Şahin Umutcan Üstündaş<sup>1,3,♥</sup></span>
+<span class="author-entry">Yurdasen Alp Yeni<sup>1,3,♥</sup></span>
+<span class="author-entry"><a class="author-name" href="https://scholar.google.com/citations?user=JMGwjD4AAAAJ&amp;hl=en" rel="noopener" target="_blank">Halil Ersin Soken</a><sup>2,3</sup></span>
+<span class="author-entry"><a class="author-name" href="https://scholar.google.com/citations?user=aO-849gAAAAJ&amp;hl=en" rel="noopener" target="_blank">Erol Sahin</a><sup>1,3</sup></span>
+<span class="author-entry"><a class="author-name" href="https://scholar.google.com/citations?user=Za7uka8AAAAJ&amp;hl=en" rel="noopener" target="_blank">Ramazan Gokberk Cinbis</a><sup>1,3,♦</sup></span>
+<span class="author-entry"><a class="author-name" href="https://scholar.google.com/citations?user=yiAWeIAAAAAJ&amp;hl=en" rel="noopener" target="_blank">Sinan Kalkan</a><sup>1,3,♦</sup></span>
 </div>
-<div class="author-affil">¹Department of Computer Engineering · ²Department of Aerospace Engineering · ³ROMER — Middle East Technical University (METU), Ankara, Türkiye</div>
+<div class="author-affil-block">
+<p class="author-affil"><sup>1</sup>Department of Computer Engineering, <sup>2</sup>Department of Aerospace Engineering, <sup>3</sup>ROMER<br/>Middle East Technical University (METU), Ankara, Turkey</p>
+<p class="author-footnotes"><span aria-hidden="true">♥</span> Equal contribution.<br/><span aria-hidden="true">♦</span> Equal senior contribution. <a href="mailto:skalkan@metu.edu.tr" style="color:#7aa4ff">skalkan@metu.edu.tr</a></p>
+</div>
 </div>
 </section>
 <!-- ══ ABSTRACT ══════════════════════════════ -->
