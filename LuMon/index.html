@@ -615,7 +615,14 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+      gap: 10px;
       margin-bottom: 12px;
+    }
+    .ds-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-end;
     }
     .ds-name {
       font-size: 1rem;
@@ -1485,7 +1492,7 @@
 <div class="ds-card">
 <div class="ds-top">
 <div class="ds-name">LunarSim</div>
-<span class="tag tag-blue">Synthetic</span>
+<div class="ds-badges"><span class="tag tag-blue">Synthetic</span></div>
 </div>
 <div class="ds-body">Physics-based lunar simulation with accurate shadow rendering, crater morphology, and rock distributions. Standard orbital lighting conditions.</div>
 <div class="ds-tags">
@@ -1497,9 +1504,9 @@
 <div class="ds-card">
 <div class="ds-top">
 <div class="ds-name">LuSNAR</div>
-<span class="tag tag-blue">External benchmark</span>
+<div class="ds-badges"><span class="tag tag-blue">Synthetic</span></div>
 </div>
-<div class="ds-body">Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks. We evaluate on it but do not distribute it, use the <a href="https://github.com/zqyu9/LuSNAR-dataset" rel="noopener" style="color:#7aa4ff" target="_blank">official LuSNAR repository ↗</a>.</div>
+<div class="ds-body">Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks.</div>
 <div class="ds-tags">
 <span class="tag tag-violet">1024×1024</span>
 <span class="tag tag-cyan">Dense GT</span>
@@ -1509,7 +1516,7 @@
 <div class="ds-card">
 <div class="ds-top">
 <div class="ds-name">Etna-LRNT</div>
-<span class="tag tag-green">Earth Analog</span>
+<div class="ds-badges"><span class="tag tag-green">Earth Analog</span></div>
 </div>
 <div class="ds-body">Volcanic terrain analog with LiDAR-derived sparse ground truth. Reveals why Earth analogs can be deceptive proxies for true lunar performance.</div>
 <div class="ds-tags">
@@ -1521,7 +1528,7 @@
 <div class="ds-card">
 <div class="ds-top">
 <div class="ds-name">Etna-S3LI</div>
-<span class="tag tag-green">Earth Analog</span>
+<div class="ds-badges"><span class="tag tag-green">Earth Analog</span></div>
 </div>
 <div class="ds-body">Stereo-derived dense depth maps from volcanic terrain. Enables precise geometric error analysis of crater rims and rock edges.</div>
 <div class="ds-tags">
@@ -1533,7 +1540,7 @@
 <div class="ds-card" style="border-color: rgba(139,92,246,.25);">
 <div class="ds-top">
 <div class="ds-name">CHERI ★</div>
-<span class="tag tag-violet">Novel</span>
+<div class="ds-badges"><span class="tag tag-violet">Novel</span></div>
 </div>
 <div class="ds-body">Our novel dark analog environment with extreme polar lighting. Captures permanently-shadowed region conditions that cause catastrophic failure in relative methods.</div>
 <div class="ds-tags">
@@ -1545,7 +1552,7 @@
 <div class="ds-card" style="border-color: rgba(251,191,36,.2);">
 <div class="ds-top">
 <div class="ds-name">Chang'e-3</div>
-<span class="tag tag-amber">Real Lunar</span>
+<div class="ds-badges"><span class="tag tag-amber">Real Lunar</span></div>
 </div>
 <div class="ds-body">Authentic lunar surface data from China's Chang'e-3 mission. The only real lunar dataset — the ultimate test of domain transfer from simulation and analogs.</div>
 <div class="ds-tags">
