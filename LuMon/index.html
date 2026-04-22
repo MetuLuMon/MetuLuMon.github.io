@@ -122,11 +122,20 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
     }
     .nav-brand {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .nav-brand:focus-visible {
+      outline: 2px solid rgba(79,128,255,.55);
+      outline-offset: 3px;
+      border-radius: 10px;
     }
     .nav-brand-icon {
       width: 32px; height: 32px;
@@ -134,12 +143,20 @@
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       font-size: .85rem;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+    .nav-brand:hover .nav-brand-icon {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(79,128,255,.28);
     }
     .nav-brand-text {
       font-size: .95rem;
       font-weight: 700;
       color: var(--white);
       letter-spacing: -.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .nav-brand-text span {
       color: var(--muted);
@@ -169,20 +186,77 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
     }
     .nav-cta {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
       padding: 8px 18px;
-      background: var(--blue);
+      background: linear-gradient(135deg, #5b88ff 0%, #3d6df2 100%);
+      border: 1px solid rgba(128,162,255,.28);
       color: #fff;
       border-radius: var(--r-sm);
       font-size: .82rem;
       font-weight: 600;
-      transition: all .2s;
+      transition: transform .22s, box-shadow .22s, border-color .22s;
+      white-space: nowrap;
+      box-shadow: 0 7px 20px rgba(79,128,255,.32);
+    }
+    .nav-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 28%, rgba(255,255,255,.3) 50%, transparent 72%);
+      transform: translateX(-130%);
+      transition: transform .45s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .nav-cta span,
+    .nav-cta svg {
+      position: relative;
+      z-index: 1;
+    }
+    .nav-cta svg {
+      transition: transform .24s ease;
     }
     .nav-cta:hover {
-      background: var(--blue2);
+      border-color: rgba(148,177,255,.52);
       transform: translateY(-1px);
-      box-shadow: 0 4px 16px var(--glow-b);
+      box-shadow: 0 10px 28px rgba(79,128,255,.42);
+    }
+    .nav-cta:hover::before {
+      transform: translateX(130%);
+    }
+    .nav-cta:hover svg {
+      transform: translate(2px, -1px);
+    }
+    .nav-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+      background: rgba(22,30,48,.85);
+      color: var(--silver);
+      font-size: .8rem;
+      font-weight: 600;
+      transition: all .22s;
+      white-space: nowrap;
+    }
+    .nav-github svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+    .nav-github:hover {
+      color: var(--white);
+      border-color: rgba(79,128,255,.36);
+      background: var(--card2);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,.35);
     }
 
     /* ════════════════════════════════════════
@@ -313,6 +387,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      justify-content: flex-start;
       margin-bottom: 48px;
     }
     .btn {
@@ -338,6 +413,17 @@
       border: 1px solid var(--border);
     }
     .btn-ghost:hover { border-color: rgba(79,128,255,.35); color: var(--white); transform: translateY(-2px); }
+    .btn-github {
+      background: rgba(22,30,48,.9);
+      color: var(--silver);
+      border: 1px solid var(--border);
+    }
+    .btn-github:hover {
+      color: var(--white);
+      border-color: rgba(79,128,255,.38);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.36);
+    }
 
     /* Stats row */
     .hero-stats {
@@ -387,6 +473,7 @@
       position: relative;
       width: 340px;
       height: 340px;
+      perspective: 900px;
     }
     .moon-glow {
       position: absolute;
@@ -410,18 +497,25 @@
       position: relative;
       overflow: hidden;
     }
+    .moon-sphere {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
     /* craters */
     .crater {
       position: absolute;
+      top: 50%; left: 50%;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(0,0,0,.5) 40%, rgba(255,255,255,.03) 70%, transparent 100%);
       box-shadow: inset 2px 2px 6px rgba(0,0,0,.6), 0 1px 0 rgba(255,255,255,.05);
+      backface-visibility: hidden;
+      margin-top: calc(var(--s) / -2);
+      margin-left: calc(var(--s) / -2);
+      width: var(--s); height: var(--s);
+      transform-origin: center;
     }
-    .c1 { width: 70px; height: 70px; top: 28%; left: 40%; }
-    .c2 { width: 42px; height: 42px; top: 55%; left: 22%; }
-    .c3 { width: 28px; height: 28px; top: 20%; left: 58%; }
-    .c4 { width: 20px; height: 20px; top: 65%; left: 55%; }
-    .c5 { width: 16px; height: 16px; top: 40%; left: 18%; }
     .moon-ring {
       position: absolute;
       inset: -12px;
@@ -690,8 +784,44 @@
     tbody td:first-child { font-weight: 600; color: var(--white); }
     .highlight-row { background: rgba(79,128,255,.05) !important; }
     .gold { color: #fbbf24 !important; font-weight: 700 !important; }
-    .silver-c { color: #9ca3af !important; font-weight: 600 !important; }
+    .silver-c { color: #d6dfef !important; font-weight: 700 !important; text-shadow: 0 0 10px rgba(214,223,239,.16); }
     .bronze { color: #cd7c3a !important; font-weight: 600 !important; }
+    .extracted-table th.model-group-col,
+    .extracted-table td.model-group-col {
+      text-align: center;
+      white-space: nowrap;
+      width: 34px;
+      min-width: 34px;
+      padding: 0 6px;
+    }
+    .model-group-cell {
+      border-right: 1px solid var(--border);
+      background: rgba(13,20,36,.9);
+    }
+    .model-group-vert {
+      display: inline-flex;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      line-height: 1;
+      opacity: .96;
+    }
+    .model-group-cell.metric .model-group-vert {
+      color: #7aa4ff;
+    }
+    .model-group-cell.relative .model-group-vert {
+      color: #cdd8eb;
+    }
+    .extracted-table tr.model-group-sep td {
+      border-top: 2px solid rgba(108,137,204,.45);
+    }
+    .extracted-table td.model-name-cell {
+      font-weight: 600;
+      color: var(--white);
+    }
 
     /* ════════════════════════════════════════
        VIDEOS
@@ -798,6 +928,17 @@
       color: var(--muted);
       margin-top: 12px;
       text-align: center;
+    }
+    .table-note-detail {
+      font-size: .72rem;
+      color: var(--faint);
+      margin-top: 6px;
+    }
+    .table-note-detail a {
+      color: #7aa4ff;
+    }
+    .table-note-detail a:hover {
+      color: #a8c1ff;
     }
 
     /* ════════════════════════════════════════
@@ -1026,6 +1167,64 @@
       color: var(--faint);
     }
 
+    /* Scroll to top */
+    .scroll-top {
+      position: fixed;
+      right: 22px;
+      bottom: 24px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: rgba(12,17,32,.92);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 28px rgba(0,0,0,.45);
+      cursor: pointer;
+      z-index: 980;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px);
+      transition: opacity .25s, transform .25s, visibility .25s, background .2s, border-color .2s;
+    }
+    .scroll-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .scroll-top:hover {
+      background: var(--blue);
+      border-color: rgba(79,128,255,.48);
+    }
+    .scroll-top svg { width: 16px; height: 16px; }
+
+    /* Bottom-up reveal animation */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .55s ease, transform .55s ease;
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    .reveal-up.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-up,
+      .scroll-top {
+        transition: none;
+      }
+      .moon-body,
+      .crater,
+      .moon-chip {
+        animation: none !important;
+      }
+    }
+
     /* ════════════════════════════════════════
        RESPONSIVE
     ════════════════════════════════════════ */
@@ -1054,6 +1253,12 @@
       .slider-prev { left: 8px; }
       .slider-next { right: 8px; }
       .slider-slide[style] { padding: 0 10px !important; }
+      .scroll-top {
+        right: 14px;
+        bottom: 16px;
+        width: 38px;
+        height: 38px;
+      }
     }
 
     /* sr-only (screen reader) */
@@ -1087,12 +1292,17 @@
       cursor: pointer;
       padding: 6px;
       color: var(--silver);
+      transition: transform .25s ease, color .25s ease;
     }
     .nav-hamburger svg { width: 22px; height: 22px; }
-    @media (max-width: 768px) {
+    .nav-hamburger[aria-expanded="true"] {
+      transform: rotate(90deg);
+      color: var(--white);
+    }
+    @media (max-width: 900px) {
       .nav-hamburger { display: flex; align-items: center; }
       .nav-links {
-        display: none;
+        display: flex;
         position: absolute;
         top: 62px; left: 0; right: 0;
         flex-direction: column;
@@ -1101,10 +1311,95 @@
         border-bottom: 1px solid var(--border);
         padding: 8px 16px 16px;
         gap: 2px;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
       }
-      .nav-links.open { display: flex; }
+      .nav-links li {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity .25s ease, transform .25s ease;
+      }
+      .nav-links.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+      .nav-links.open li {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .nav-links.open li:nth-child(1) { transition-delay: .03s; }
+      .nav-links.open li:nth-child(2) { transition-delay: .06s; }
+      .nav-links.open li:nth-child(3) { transition-delay: .09s; }
+      .nav-links.open li:nth-child(4) { transition-delay: .12s; }
+      .nav-links.open li:nth-child(5) { transition-delay: .15s; }
       .nav-links a { padding: 12px 16px; font-size: .9rem; }
-      .nav-cta { font-size: .85rem; }
+      .nav-wrap { padding: 0 12px; }
+      .nav-brand-text { font-size: .88rem; }
+      .nav-brand-text span { display: none; }
+      .nav-pill { gap: 4px; }
+      .nav-github {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        gap: 0;
+        font-size: 0;
+        justify-content: center;
+      }
+      .nav-github svg {
+        width: 16px;
+        height: 16px;
+      }
+      .nav-cta {
+        padding: 8px 11px;
+        font-size: .78rem;
+      }
+      .hero-btns {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 36px;
+      }
+      .hero-btns .btn {
+        flex: 1 1 160px;
+        max-width: 220px;
+        justify-content: center;
+      }
+      .moon-scene {
+        width: min(270px, 78vw);
+        height: min(270px, 78vw);
+      }
+      .moon-chip {
+        font-size: .7rem;
+        padding: 7px 10px;
+      }
+      .mc1 { right: 4px; }
+      .mc2 { left: 4px; }
+      .mc3 { right: 4px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-btns .btn {
+        flex-basis: 100%;
+        max-width: 260px;
+      }
+      .moon-scene {
+        width: min(240px, 74vw);
+        height: min(240px, 74vw);
+      }
+      .moon-chip {
+        max-width: 132px;
+        white-space: normal;
+        line-height: 1.25;
+        padding: 6px 8px;
+        font-size: .66rem;
+      }
+      .mc1 { top: 2%; }
+      .mc2 { bottom: 10%; }
+      .mc3 { top: 56%; }
     }
 
     /* authors section */
@@ -1297,16 +1592,16 @@
     .extracted-table thead th { text-align: center; padding: 10px 12px; } 
 </style>
 </head>
-<body>
+<body id="top">
 <a class="skip-link" href="#abstract">Skip to content</a>
 <div aria-hidden="true" class="stars"></div>
 <!-- ══ NAV ══════════════════════════════════ -->
 <nav>
 <div class="nav-wrap">
-<div class="nav-brand">
+<a aria-label="Go to top" class="nav-brand" href="#top">
 <div aria-hidden="true" class="nav-brand-icon"><svg fill="none" height="18" stroke="#fff" stroke-width="1.5" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><circle cx="10" cy="10" fill="rgba(255,255,255,.2)" r="3"></circle><circle cx="15" cy="14" fill="rgba(255,255,255,.15)" r="1.5"></circle><circle cx="8" cy="15" fill="rgba(255,255,255,.12)" r="1"></circle></svg></div>
 <div class="nav-brand-text">LuMon <span>· AI4Space @ CVPR 2026</span></div>
-</div>
+</a>
 <ul class="nav-links" id="navLinks">
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#datasets">Datasets</a></li>
@@ -1315,7 +1610,8 @@
 <li><a href="#citation">Cite</a></li>
 </ul>
 <div class="nav-pill">
-<a class="nav-cta" href="https://arxiv.org/pdf/2604.09352" rel="noopener" target="_blank">Read Paper <svg fill="none" height="13" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px" viewbox="0 0 24 24" width="13"><path d="M7 17L17 7M17 7H7M17 7v10"></path></svg></a>
+<a aria-label="Open LuMon GitHub repository" class="nav-github" href="https://github.com/MetuLuMon/LuMon-depth" rel="noopener" target="_blank"><svg aria-hidden="true" fill="currentColor" viewbox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12A11.5 11.5 0 0 0 8.36 22.9c.58.11.79-.25.79-.56l-.01-2.16c-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.97.1-.75.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.67 0-1.25.44-2.27 1.18-3.08-.12-.29-.51-1.47.11-3.07 0 0 .96-.31 3.15 1.18a10.8 10.8 0 0 1 5.73 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.6.23 2.78.12 3.07.73.81 1.18 1.83 1.18 3.08 0 4.4-2.69 5.38-5.25 5.66.42.36.78 1.06.78 2.14l-.01 3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"></path></svg>GitHub</a>
+<a class="nav-cta" href="https://arxiv.org/pdf/2604.09352" rel="noopener" target="_blank"><span>Read Paper</span> <svg fill="none" height="13" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px" viewbox="0 0 24 24" width="13"><path d="M7 17L17 7M17 7H7M17 7v10"></path></svg></a>
 <button aria-expanded="false" aria-label="Toggle menu" class="nav-hamburger" id="navToggle">
 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24"><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
 </button>
@@ -1323,7 +1619,7 @@
 </div>
 </nav>
 <!-- ══ HERO ══════════════════════════════════ -->
-<section class="hero">
+<section class="hero reveal-up">
 <div class="hero-wrap">
 <div class="hero-left">
 <a class="hero-venue" href="https://ai4space.space/" rel="noopener" target="_blank">
@@ -1357,9 +1653,9 @@
 <svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line></svg>
           Paper PDF
         </a>
-<a class="btn btn-ghost" href="#" style="; opacity: 0.5; pointer-events: none; cursor: not-allowed;" target="_self" title="Coming Soon">
-<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-          Supplementary
+<a class="btn btn-github" href="https://github.com/MetuLuMon/LuMon-depth" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="currentColor" viewbox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12A11.5 11.5 0 0 0 8.36 22.9c.58.11.79-.25.79-.56l-.01-2.16c-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.97.1-.75.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.67 0-1.25.44-2.27 1.18-3.08-.12-.29-.51-1.47.11-3.07 0 0 .96-.31 3.15 1.18a10.8 10.8 0 0 1 5.73 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.6.23 2.78.12 3.07.73.81 1.18 1.83 1.18 3.08 0 4.4-2.69 5.38-5.25 5.66.42.36.78 1.06.78 2.14l-.01 3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"></path></svg>
+          GitHub Repo
         </a>
 <a class="btn btn-ghost" href="#videos">
 <svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect height="14" rx="2" ry="2" width="15" x="1" y="5"></rect></svg>
@@ -1371,11 +1667,22 @@
 <div class="moon-scene">
 <div class="moon-glow"></div>
 <div class="moon-body">
-<div class="crater c1"></div>
-<div class="crater c2"></div>
-<div class="crater c3"></div>
-<div class="crater c4"></div>
-<div class="crater c5"></div>
+<div class="moon-sphere">
+<div class="crater" style="--s:70px; transform: rotateX(-20deg) rotateY(0deg) translateZ(170px)"></div>
+<div class="crater" style="--s:42px; transform: rotateX(10deg) rotateY(-40deg) translateZ(170px)"></div>
+<div class="crater" style="--s:28px; transform: rotateX(-30deg) rotateY(30deg) translateZ(170px)"></div>
+<div class="crater" style="--s:20px; transform: rotateX(30deg) rotateY(20deg) translateZ(170px)"></div>
+<div class="crater" style="--s:16px; transform: rotateX(-10deg) rotateY(-60deg) translateZ(170px)"></div>
+<div class="crater" style="--s:34px; transform: rotateX(-15deg) rotateY(120deg) translateZ(170px)"></div>
+<div class="crater" style="--s:24px; transform: rotateX(25deg) rotateY(150deg) translateZ(170px)"></div>
+<div class="crater" style="--s:14px; transform: rotateX(-5deg) rotateY(200deg) translateZ(170px)"></div>
+<div class="crater" style="--s:26px; transform: rotateX(-40deg) rotateY(250deg) translateZ(170px)"></div>
+<div class="crater" style="--s:50px; transform: rotateX(20deg) rotateY(100deg) translateZ(170px)"></div>
+<div class="crater" style="--s:18px; transform: rotateX(40deg) rotateY(-100deg) translateZ(170px)"></div>
+<div class="crater" style="--s:32px; transform: rotateX(-25deg) rotateY(-150deg) translateZ(170px)"></div>
+<div class="crater" style="--s:40px; transform: rotateX(45deg) rotateY(180deg) translateZ(170px)"></div>
+<div class="crater" style="--s:22px; transform: rotateX(-10deg) rotateY(-200deg) translateZ(170px)"></div>
+</div>
 </div>
 <div class="moon-ring"></div>
 <div class="moon-ring2"></div>
@@ -1389,14 +1696,14 @@
         </div>
 <div class="moon-chip mc3">
 <div class="chip-dot" style="background:#5ee8f5"></div>
-          Chang'e-3 ✓
+          6 Datasets ✓
         </div>
 </div>
 </div>
 </div>
 </section>
 <!-- ══ AUTHORS ═══════════════════════════════ -->
-<section class="authors">
+<section class="authors reveal-up">
 <div class="wrap">
 <div class="author-list">
 <span class="author-entry">Aytaç Sekmen<sup>1,3,♥</sup></span>
@@ -1414,12 +1721,12 @@
 </div>
 <div class="author-affil-block">
 <p class="author-affil"><sup>1</sup>Department of Computer Engineering, <sup>2</sup>Department of Aerospace Engineering, <sup>3</sup>ROMER<br/>Middle East Technical University (METU), Ankara, Turkey</p>
-<p class="author-footnotes"><span aria-hidden="true">♥</span> Equal contribution.<br/><span aria-hidden="true">♦</span> Equal senior contribution. <a href="mailto:skalkan@metu.edu.tr" style="color:#7aa4ff">skalkan@metu.edu.tr</a></p>
+<p class="author-footnotes"><span aria-hidden="true">♥</span> Equal contribution.<br/><span aria-hidden="true">♦</span> Equal senior contribution. Contact Email: <a href="mailto:skalkan@metu.edu.tr" style="color:#7aa4ff">skalkan@metu.edu.tr</a></p>
 </div>
 </div>
 </section>
 <!-- ══ ABSTRACT ══════════════════════════════ -->
-<section class="sec sec-alt" id="abstract">
+<section class="sec sec-alt reveal-up" id="abstract">
 <div class="wrap">
 <div class="sec-head-center">
 <div class="sec-label">Abstract</div>
@@ -1439,7 +1746,7 @@
 </div>
 </section>
 <!-- ══ CONTRIBUTIONS ═════════════════════════ -->
-<section class="sec" id="contributions">
+<section class="sec reveal-up" id="contributions">
 <div class="wrap">
 <div class="sec-head">
 <div class="sec-label">Contributions</div>
@@ -1481,7 +1788,7 @@
 </div>
 </section>
 <!-- ══ DATASETS ═══════════════════════════════ -->
-<section class="sec sec-alt" id="datasets">
+<section class="sec sec-alt reveal-up" id="datasets">
 <div class="wrap">
 <div class="sec-head">
 <div class="sec-label">Datasets</div>
@@ -1592,10 +1899,10 @@
 </div>
 </section>
 <!-- ══ VIDEOS ════════════════════════════════ -->
-<section class="sec" id="videos">
+<section class="sec reveal-up" id="videos">
 <div class="wrap">
 <div class="sec-head">
-<div class="sec-label">Qualitative Results</div>
+<div class="sec-label">Videos</div>
 <h2 class="sec-h">Side-by-Side Model Comparisons</h2>
 <p class="sec-p">All models visualized with consistent depth colormaps. Comparisons reveal stark differences in handling of craters, shadows, and low-texture regions.</p>
 </div>
@@ -1675,7 +1982,7 @@
 </div>
 </section>
 <!-- ══ METRICS ═══════════════════════════════ -->
-<section class="sec sec-alt" id="metrics">
+<section class="sec sec-alt reveal-up" id="metrics">
 <div class="wrap">
 <div class="sec-head-center">
 <div class="sec-label">Evaluation Framework</div>
@@ -1710,8 +2017,8 @@
 </div>
 </section>
 <!-- ══ RESULTS ═══════════════════════════════ -->
-<section class="sec sec-alt" id="results">
-<div class="wrap" style="   ">
+<section class="sec sec-alt reveal-up" id="results">
+<div class="wrap">
 <div class="sec-head">
 <div class="sec-label">Results</div>
 <h2 class="sec-h">Quantitative Findings</h2>
@@ -1741,9 +2048,10 @@
 </div>
 </div><div class="slider-container" id="tableSlider" style="padding: 20px 0; margin: 40px auto; width: 100%; max-width: 1500px;"><button aria-label="Previous Table" class="slider-arrow slider-prev"><svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><polyline points="15 18 9 12 15 6"></polyline></svg></button><button aria-label="Next Table" class="slider-arrow slider-next"><svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><polyline points="9 18 15 12 9 6"></polyline></svg></button><div class="slider-wrapper" id="sliderWrapper"><div class="slider-slide" style="width: 100%; box-sizing: border-box; padding: 0 50px; display: block;"><div class="table-wrap" style="width: 100%; border: none; background: transparent;"><h3 style="color: var(--white); text-align: center; margin-bottom: 20px; font-size: 1.1rem;">Overall Evaluation Across Datasets</h3><div class="table-scroll" style="width: 100%; overflow-x: auto;"><table class="extracted-table"><thead><tr><th rowspan="2">Model</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LunarSim</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LuSNAR</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-LRNT</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-S3LI</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Chang'e-3</th></tr><tr><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th></tr></thead><tbody><tr><td>DAv2-FT(Ours)</td><td class="silver-c">0.84</td><td class="silver-c">0.13</td><td>13.96</td><td class="gold">0.93</td><td class="gold">0.07</td><td class="gold">1.07</td><td class="gold">1.00</td><td>0.05</td><td>0.13</td><td>0.84</td><td>0.13</td><td>1.30</td><td>0.92</td><td>0.08</td><td>0.70</td></tr><tr><td>DepthAnything v2</td><td>0.56</td><td>0.26</td><td>15.18</td><td>0.31</td><td>0.45</td><td>2.89</td><td class="gold">1.00</td><td>0.06</td><td>0.15</td><td>0.88</td><td>0.12</td><td>1.22</td><td class="silver-c">0.95</td><td class="silver-c">0.06</td><td>0.56</td></tr><tr><td>DepthAnything3</td><td>0.63</td><td>0.22</td><td>14.15</td><td>0.53</td><td>0.29</td><td>1.99</td><td class="silver-c">1.00</td><td>0.04</td><td>0.11</td><td class="gold">0.91</td><td class="gold">0.10</td><td>1.12</td><td class="gold">0.96</td><td class="gold">0.05</td><td class="silver-c">0.44</td></tr><tr><td>MoGe-2</td><td>0.77</td><td>0.15</td><td>12.17</td><td>0.53</td><td>0.29</td><td>1.80</td><td>0.99</td><td>0.05</td><td>0.15</td><td class="gold">0.91</td><td class="gold">0.10</td><td class="silver-c">1.08</td><td>0.95</td><td>0.06</td><td>0.45</td></tr><tr><td>DepthPro</td><td>0.50</td><td>0.29</td><td>17.57</td><td>0.33</td><td>0.45</td><td>2.70</td><td>0.73</td><td>241.71</td><td>450.05</td><td>0.89</td><td>0.11</td><td>1.11</td><td>0.89</td><td>0.10</td><td>0.89</td></tr><tr><td>Metric-3D v2</td><td>0.75</td><td>0.16</td><td>12.53</td><td>0.61</td><td>0.25</td><td>1.71</td><td>1.00</td><td class="gold">0.03</td><td>0.10</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.95</td><td class="gold">0.05</td><td class="gold">0.43</td></tr><tr><td>UniDepth v2</td><td>0.76</td><td>0.21</td><td>16.16</td><td>0.63</td><td>0.26</td><td>2.14</td><td>1.00</td><td class="gold">0.03</td><td class="gold">0.07</td><td>0.87</td><td>0.12</td><td>1.20</td><td>0.94</td><td>0.07</td><td>0.54</td></tr><tr><td>MapAnything</td><td class="gold">0.86</td><td class="gold">0.11</td><td class="gold">10.73</td><td>0.74</td><td>0.17</td><td class="silver-c">1.53</td><td>1.00</td><td class="silver-c">0.03</td><td class="silver-c">0.08</td><td class="silver-c">0.91</td><td class="silver-c">0.10</td><td class="gold">1.05</td><td>0.95</td><td>0.07</td><td>0.52</td></tr><tr><td>VDA</td><td>0.75</td><td>0.16</td><td>13.94</td><td>0.77</td><td>0.17</td><td>2.05</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.83</td><td>0.14</td><td>1.34</td><td>0.93</td><td>0.08</td><td>0.68</td></tr><tr><td>MetricAnything</td><td>0.79</td><td>0.15</td><td class="silver-c">12.08</td><td>0.51</td><td>0.30</td><td>1.83</td><td>0.98</td><td>0.07</td><td>0.22</td><td>0.91</td><td>0.10</td><td class="gold">1.05</td><td>0.95</td><td>0.06</td><td>0.44</td></tr><tr><td>DepthAnything-AC</td><td>0.70</td><td>0.28</td><td>19.12</td><td>0.70</td><td>0.26</td><td>2.63</td><td>1.00</td><td>0.05</td><td>0.12</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.66</td><td>0.22</td><td>1.55</td></tr><tr><td>DepthCrafter</td><td>0.40</td><td>0.37</td><td>20.28</td><td>0.41</td><td>0.47</td><td>2.96</td><td>0.92</td><td>0.10</td><td>0.28</td><td>0.80</td><td>0.15</td><td>1.44</td><td>0.87</td><td>0.13</td><td>1.05</td></tr><tr><td>Lotus</td><td>0.59</td><td>0.27</td><td>20.43</td><td>0.36</td><td>0.44</td><td>3.08</td><td>0.65</td><td>0.19</td><td>0.49</td><td>0.80</td><td>0.15</td><td>1.45</td><td>0.70</td><td>0.19</td><td>1.64</td></tr><tr><td>MiDaS v3.1</td><td>0.78</td><td>0.17</td><td>14.97</td><td class="silver-c">0.81</td><td class="silver-c">0.13</td><td>1.68</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.89</td><td>0.11</td><td>1.15</td><td>0.81</td><td>0.15</td><td>1.12</td></tr><tr><td>Marigold</td><td>0.67</td><td>0.21</td><td>17.25</td><td>0.62</td><td>0.24</td><td>2.02</td><td>0.94</td><td>0.10</td><td>0.27</td><td>0.86</td><td>0.12</td><td>1.26</td><td>0.91</td><td>0.09</td><td>0.69</td></tr></tbody></table></div></div></div><div class="slider-slide" style="width: 100%; box-sizing: border-box; padding: 0 50px; display: block;"><div class="table-wrap" style="width: 100%; border: none; background: transparent;"><h3 style="color: var(--white); text-align: center; margin-bottom: 20px; font-size: 1.1rem;">Evaluation on Shaded Regions</h3><div class="table-scroll" style="width: 100%; overflow-x: auto;"><table class="extracted-table"><thead><tr><th rowspan="2">Model</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LunarSim</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LuSNAR</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-LRNT</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-S3LI</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Chang'e-3</th></tr><tr><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th></tr></thead><tbody><tr><td>DAv2-FT(Ours)</td><td class="silver-c">0.79</td><td class="silver-c">0.15</td><td>15.10</td><td class="gold">0.84</td><td class="gold">0.11</td><td class="gold">0.95</td><td class="gold">1.00</td><td>0.06</td><td>0.10</td><td>0.46</td><td>0.29</td><td>2.88</td><td>0.89</td><td>0.10</td><td>0.73</td></tr><tr><td>DepthAnything v2</td><td>0.47</td><td>0.29</td><td>16.39</td><td>0.20</td><td>0.66</td><td>2.86</td><td>0.99</td><td>0.07</td><td>0.12</td><td>0.51</td><td>0.33</td><td>2.85</td><td class="gold">0.94</td><td>0.07</td><td>0.59</td></tr><tr><td>DepthAnything3</td><td>0.54</td><td>0.26</td><td>15.77</td><td>0.34</td><td>0.40</td><td>2.15</td><td class="gold">1.00</td><td class="silver-c">0.05</td><td>0.07</td><td>0.53</td><td>0.46</td><td>3.58</td><td class="gold">0.94</td><td class="gold">0.06</td><td class="silver-c">0.45</td></tr><tr><td>MoGe-2</td><td>0.68</td><td>0.18</td><td>14.42</td><td>0.35</td><td>0.41</td><td>1.90</td><td>0.99</td><td>0.05</td><td>0.08</td><td>0.56</td><td>0.38</td><td>3.22</td><td>0.93</td><td>0.07</td><td>0.46</td></tr><tr><td>DepthPro</td><td>0.38</td><td>0.35</td><td>21.33</td><td>0.23</td><td>0.68</td><td>2.83</td><td>0.39</td><td>559.37</td><td>818.97</td><td>0.59</td><td>0.25</td><td>2.36</td><td>0.85</td><td>0.11</td><td>0.87</td></tr><tr><td>Metric-3D v2</td><td>0.62</td><td>0.20</td><td>14.35</td><td>0.39</td><td>0.38</td><td>1.92</td><td class="silver-c">1.00</td><td>0.05</td><td>0.07</td><td>0.68</td><td>0.23</td><td>2.35</td><td class="silver-c">0.94</td><td class="gold">0.06</td><td class="gold">0.44</td></tr><tr><td>UniDepth v2</td><td>0.70</td><td>0.23</td><td>24.12</td><td>0.45</td><td>0.36</td><td>2.85</td><td>1.00</td><td class="gold">0.03</td><td class="silver-c">0.05</td><td>0.75</td><td class="silver-c">0.17</td><td>1.90</td><td>0.92</td><td>0.08</td><td>0.54</td></tr><tr><td>MapAnything</td><td class="gold">0.80</td><td class="gold">0.13</td><td class="gold">11.48</td><td>0.60</td><td>0.22</td><td class="silver-c">1.64</td><td>1.00</td><td class="gold">0.03</td><td class="gold">0.04</td><td class="gold">0.80</td><td class="gold">0.15</td><td class="gold">1.63</td><td>0.93</td><td>0.08</td><td>0.55</td></tr><tr><td>VDA</td><td>0.66</td><td>0.19</td><td>16.31</td><td class="silver-c">0.65</td><td>0.23</td><td>2.19</td><td>1.00</td><td>0.06</td><td>0.09</td><td>0.48</td><td>0.28</td><td>2.61</td><td>0.90</td><td>0.10</td><td>0.68</td></tr><tr><td>MetricAnything</td><td>0.74</td><td>0.16</td><td class="silver-c">13.19</td><td>0.32</td><td>0.42</td><td>2.00</td><td>0.99</td><td>0.07</td><td>0.12</td><td>0.68</td><td>0.23</td><td>2.22</td><td>0.94</td><td class="silver-c">0.06</td><td>0.46</td></tr><tr><td>DepthAnything-AC</td><td>0.63</td><td>0.33</td><td>27.04</td><td>0.54</td><td>0.38</td><td>3.80</td><td>1.00</td><td>0.09</td><td>0.13</td><td>0.62</td><td>0.20</td><td>2.13</td><td>0.58</td><td>0.26</td><td>1.68</td></tr><tr><td>DepthCrafter</td><td>0.37</td><td>0.45</td><td>22.22</td><td>0.28</td><td>0.81</td><td>3.17</td><td>0.89</td><td>0.11</td><td>0.18</td><td>0.46</td><td>0.38</td><td>3.33</td><td>0.83</td><td>0.14</td><td>1.11</td></tr><tr><td>Lotus</td><td>0.46</td><td>0.32</td><td>29.36</td><td>0.28</td><td>0.64</td><td>3.94</td><td>0.45</td><td>0.29</td><td>0.42</td><td>0.48</td><td>0.32</td><td>3.17</td><td>0.63</td><td>0.23</td><td>1.81</td></tr><tr><td>MiDaS v3.1</td><td>0.73</td><td>0.19</td><td>16.70</td><td>0.64</td><td class="silver-c">0.20</td><td>1.99</td><td>0.99</td><td>0.07</td><td>0.10</td><td class="silver-c">0.79</td><td class="gold">0.15</td><td class="silver-c">1.75</td><td>0.74</td><td>0.18</td><td>1.17</td></tr><tr><td>Marigold</td><td>0.51</td><td>0.29</td><td>21.92</td><td>0.43</td><td>0.37</td><td>2.40</td><td>0.90</td><td>0.11</td><td>0.17</td><td>0.49</td><td>0.35</td><td>3.21</td><td>0.89</td><td>0.10</td><td>0.72</td></tr></tbody></table></div></div></div></div><div class="slider-dots" id="sliderDots" style="margin-top: 20px;"><div class="slider-dot active" data-index="0"></div><div class="slider-dot" data-index="1"></div></div></div><p class="table-note">↑ higher is better, ↓ lower is better. <span class="gold">Gold</span> indicates best, <span class="silver-c">Silver</span> indicates second best.</p>
 
+<p class="table-note table-note-detail">For extensive quantitative results, see the <a href="https://arxiv.org/pdf/2604.09352" rel="noopener" target="_blank">paper PDF</a>.</p>
 </section>
 <!-- ══ CHALLENGES ════════════════════════════ -->
-<section class="sec" id="challenges">
+<section class="sec reveal-up" id="challenges">
 <div class="wrap">
 <div class="sec-head-center">
 <div class="sec-label">Failure Analysis</div>
@@ -1791,7 +2099,7 @@
 </div>
 </section>
 <!-- ══ CITATION ═════════════════════════════ -->
-<section class="sec bibtex-section" id="citation">
+<section class="sec bibtex-section reveal-up" id="citation">
 <div class="wrap">
 <div class="sec-head-center">
 <div class="sec-label">Citation</div>
@@ -1817,7 +2125,7 @@
 </section>
 <!-- ══ FOOTER ════════════════════════════════ -->
 <footer>
-<div class="footer-inner">
+<div class="footer-inner reveal-up">
 <div class="footer-brand">
 <div aria-hidden="true" class="footer-brand-icon"><svg fill="none" height="16" stroke="#fff" stroke-width="1.5" viewbox="0 0 24 24" width="16"><circle cx="12" cy="12" r="9"></circle><circle cx="10" cy="10" fill="rgba(255,255,255,.2)" r="3"></circle><circle cx="15" cy="14" fill="rgba(255,255,255,.15)" r="1.5"></circle></svg></div>
 <div class="footer-brand-text">LuMon · AI4Space @ CVPR 2026</div>
@@ -1825,7 +2133,7 @@
 <div class="footer-links">
 <a href="https://ai4space.space/" rel="noopener" style="color:#5ee8b4" target="_blank">AI4Space Workshop ↗</a>
 <a href="https://arxiv.org/pdf/2604.09352" rel="noopener" target="_blank">Paper PDF ↗</a>
-<a href="#" style="; opacity: 0.5; pointer-events: none; cursor: not-allowed;" target="_self" title="Coming Soon">Appendix</a>
+<a href="https://arxiv.org/abs/2604.09352" rel="noopener" target="_blank">arXiv ↗</a>
 <a href="#abstract">Abstract</a>
 <a href="#datasets">Datasets</a>
 <a href="#videos">Videos</a>
@@ -1835,6 +2143,9 @@
 <div class="footer-copy">Accepted · 4th AI4Space Workshop · CVPR 2026 · Denver</div>
 </div>
 </footer>
+<button aria-label="Scroll to top" class="scroll-top" id="scrollTopBtn" type="button">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" viewbox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
 <script>
   // Hamburger menu toggle
   const navToggle = document.getElementById('navToggle');
@@ -1864,6 +2175,200 @@
     });
   }, { rootMargin: '-30% 0px -60% 0px' });
   sections.forEach(s => observer.observe(s));
+
+  // Scroll-to-top button visibility and behavior
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  const syncScrollTopBtn = () => {
+    if (!scrollTopBtn) return;
+    scrollTopBtn.classList.toggle('show', window.scrollY > 420);
+  };
+  window.addEventListener('scroll', syncScrollTopBtn, { passive: true });
+  syncScrollTopBtn();
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // 3D Moon Interaction
+  const moonScene = document.querySelector('.moon-scene');
+  const moonSphere = document.querySelector('.moon-sphere');
+  if (moonScene && moonSphere) {
+    let isDragging = false;
+    let autoRotate = true;
+    let rotation = { x: 0, y: 0 };
+    let lastTime = performance.now();
+
+    function animateMoon(time) {
+      if (autoRotate) {
+        const delta = time - lastTime;
+        rotation.y += delta * 0.015;
+      }
+      lastTime = time;
+      moonSphere.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`;
+      requestAnimationFrame(animateMoon);
+    }
+    requestAnimationFrame(animateMoon);
+
+    moonScene.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      autoRotate = false;
+      moonScene.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      rotation.y += e.movementX * 0.5;
+      rotation.x -= e.movementY * 0.5;
+      rotation.x = Math.max(-60, Math.min(60, rotation.x));
+    });
+
+    window.addEventListener('mouseup', () => {
+      if(isDragging) {
+        isDragging = false;
+        autoRotate = true;
+        moonScene.style.cursor = 'grab';
+      }
+    });
+    moonScene.style.cursor = 'grab';
+  }
+
+  // Bottom-up reveal for lower page details
+  const revealTargets = document.querySelectorAll('.reveal-up');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    revealTargets.forEach(el => revealObserver.observe(el));
+  } else {
+    revealTargets.forEach(el => el.classList.add('revealed'));
+  }
+
+  // Annotate model groups and re-compute best/second-best highlights with tie handling
+  const modelTypeMap = {
+    'DAv2-FT(Ours)': 'Metric',
+    'DepthAnything v2': 'Metric',
+    'DepthAnything3': 'Metric',
+    'MoGe-2': 'Metric',
+    'DepthPro': 'Metric',
+    'Metric-3D v2': 'Metric',
+    'UniDepth v2': 'Metric',
+    'MapAnything': 'Metric',
+    'VDA': 'Metric',
+    'MetricAnything': 'Metric',
+    'DepthAnything-AC': 'Relative',
+    'DepthCrafter': 'Relative',
+    'Lotus': 'Relative',
+    'MiDaS v3.1': 'Relative',
+    'Marigold': 'Relative'
+  };
+
+  function annotateModelGroups(tableEl) {
+    const headerRow = tableEl.querySelector('thead tr');
+    if (headerRow && !headerRow.querySelector('.model-group-col')) {
+      const groupHeader = document.createElement('th');
+      groupHeader.innerHTML = '<span class="sr-only">Model group</span>';
+      groupHeader.className = 'model-group-col';
+      groupHeader.setAttribute('rowspan', '2');
+      headerRow.insertBefore(groupHeader, headerRow.firstElementChild);
+    }
+
+    const bodyRows = Array.from(tableEl.querySelectorAll('tbody tr'));
+    bodyRows.forEach(row => {
+      row.classList.remove('model-group-sep');
+      const existingGroupCell = row.querySelector('td.model-group-col');
+      if (existingGroupCell) existingGroupCell.remove();
+
+      const modelNameCell = row.querySelector('td');
+      if (modelNameCell) {
+        modelNameCell.classList.add('model-name-cell');
+      }
+    });
+
+    let startIdx = 0;
+    while (startIdx < bodyRows.length) {
+      const startModelCell = bodyRows[startIdx].querySelector('td');
+      if (!startModelCell) {
+        startIdx += 1;
+        continue;
+      }
+
+      const startType = (modelTypeMap[startModelCell.textContent.trim()] || 'Metric').toLowerCase();
+      let endIdx = startIdx;
+      while (endIdx + 1 < bodyRows.length) {
+        const nextModelCell = bodyRows[endIdx + 1].querySelector('td');
+        if (!nextModelCell) break;
+        const nextType = (modelTypeMap[nextModelCell.textContent.trim()] || 'Metric').toLowerCase();
+        if (nextType !== startType) break;
+        endIdx += 1;
+      }
+
+      const groupCell = document.createElement('td');
+      groupCell.className = `model-group-col model-group-cell ${startType}`;
+      groupCell.rowSpan = endIdx - startIdx + 1;
+      const groupLabel = document.createElement('span');
+      groupLabel.className = 'model-group-vert';
+      groupLabel.textContent = startType === 'metric' ? 'Metric' : 'Relative';
+      groupCell.appendChild(groupLabel);
+      bodyRows[startIdx].insertBefore(groupCell, bodyRows[startIdx].firstElementChild);
+
+      if (endIdx + 1 < bodyRows.length) {
+        bodyRows[endIdx + 1].classList.add('model-group-sep');
+      }
+
+      startIdx = endIdx + 1;
+    }
+  }
+
+  function applyMetricHighlights(tableEl) {
+    const metricHeaders = Array.from(tableEl.querySelectorAll('thead tr:nth-child(2) th'));
+    const bodyRows = Array.from(tableEl.querySelectorAll('tbody tr'));
+    if (!metricHeaders.length || !bodyRows.length) return;
+
+    const equal = (a, b) => Math.abs(a - b) < 1e-9;
+
+    metricHeaders.forEach((headerCell, metricIndex) => {
+      const direction = headerCell.textContent.includes('↑') ? 'desc' : 'asc';
+      const values = [];
+
+      bodyRows.forEach(row => {
+        const metricCells = Array.from(row.querySelectorAll('td')).slice(-metricHeaders.length);
+        const cell = metricCells[metricIndex];
+        if (!cell) return;
+        cell.classList.remove('gold', 'silver-c', 'bronze');
+        const numericValue = parseFloat(cell.textContent.replace(/[^0-9.-]/g, ''));
+        if (Number.isFinite(numericValue)) {
+          values.push({ cell, value: numericValue });
+        }
+      });
+
+      if (!values.length) return;
+      const sortedDistinct = [...new Set(values.map(item => item.value))]
+        .sort((a, b) => (direction === 'desc' ? b - a : a - b));
+
+      const bestValue = sortedDistinct[0];
+      const secondValue = sortedDistinct.length > 1 ? sortedDistinct[1] : null;
+
+      values.forEach(({ cell, value }) => {
+        if (equal(value, bestValue)) {
+          cell.classList.add('gold');
+        } else if (secondValue !== null && equal(value, secondValue)) {
+          cell.classList.add('silver-c');
+        }
+      });
+    });
+  }
+
+  document.querySelectorAll('.extracted-table').forEach(table => {
+    annotateModelGroups(table);
+    applyMetricHighlights(table);
+  });
 
   
   // Table Slider Logic

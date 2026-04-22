@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #111; color: white; padding: 50px; }
+  .moon-body {
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    background: #444;
+    box-shadow: inset -30px -30px 60px rgba(0,0,0,.85);
+  }
+  .moon-sphere {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    animation: spin 10s linear infinite;
+  }
+  .crater {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 40px; height: 40px;
+    margin-top: -20px; margin-left: -20px;
+    background: radial-gradient(circle, rgba(0,0,0,.5) 40%, rgba(255,255,255,.3) 70%, transparent 100%);
+    border-radius: 50%;
+    backface-visibility: hidden;
+  }
+  @keyframes spin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+  }
+</style>
+</head>
+<body>
+  <div class="moon-body">
+    <div class="moon-sphere">
+      <div class="crater" style="transform: rotateY(0deg) translateZ(170px)"></div>
+      <div class="crater" style="transform: rotateY(90deg) translateZ(170px)"></div>
+      <div class="crater" style="transform: rotateY(180deg) translateZ(170px)"></div>
+      <div class="crater" style="transform: rotateY(270deg) translateZ(170px)"></div>
+      <div class="crater" style="transform: rotateX(45deg) rotateY(45deg) translateZ(170px)"></div>
+    </div>
+  </div>
+</body>
+</html>
