@@ -4,15 +4,15 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LuMon — Lunar Monocular Depth Estimation Benchmark · AI4Space @ CVPR 2026</title>
-<meta content="LuMon: Lunar MDE benchmark with novel Chang'e-3 stereo ground truth and CHERI dark-analog data; 14 models across 6 datasets including synthetic LuSNAR (Liu et al.). AI4Space @ CVPR 2026." name="description"/>
-<meta content="LuMon — Lunar Monocular Depth Estimation Benchmark" property="og:title"/>
-<meta content="Benchmark for lunar MDE: novel Chang'e-3 depth &amp; CHERI dataset, plus evaluation on LunarSim, LuSNAR, Etna, and more. AI4Space @ CVPR 2026." property="og:description"/>
+<title>LuMon - Lunar Monocular Depth Estimation Benchmark · AI4Space @ CVPR 2026</title>
+<meta content="LuMon: Lunar MDE benchmark with novel Chang'e-3 stereo ground truth and CHERI dark-analog data; 14 models across 6 datasets including Etna-LRNT, Etna-S3LI, and LunarSim. AI4Space @ CVPR 2026." name="description"/>
+<meta content="LuMon - Lunar Monocular Depth Estimation Benchmark" property="og:title"/>
+<meta content="Benchmark for lunar MDE: novel Chang'e-3 depth &amp; CHERI dataset, plus evaluation on LunarSim, Etna, and more. AI4Space @ CVPR 2026." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="videos/LunarSim_comparison_poster.jpg" property="og:image"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="LuMon — Lunar Monocular Depth Estimation Benchmark" name="twitter:title"/>
-<meta content="Chang'e-3 stereo GT, CHERI analog, LuSNAR synthetic benchmark, 14 models, 6 datasets. AI4Space @ CVPR 2026." name="twitter:description"/>
+<meta content="LuMon - Lunar Monocular Depth Estimation Benchmark" name="twitter:title"/>
+<meta content="Chang'e-3 stereo GT, CHERI analog, LunarSim synthetic benchmark, 14 models, 6 datasets. AI4Space @ CVPR 2026." name="twitter:description"/>
 <meta content="videos/LunarSim_comparison_poster.jpg" name="twitter:image"/>
 <link href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;circle cx='16' cy='16' r='15' fill='%23080c18' stroke='%234f80ff' stroke-width='1.5'/&gt;&lt;circle cx='14' cy='14' r='11' fill='%23b0b0b0'/&gt;&lt;circle cx='14' cy='14' r='11' fill='url(%23g)'/&gt;&lt;circle cx='17' cy='12' r='3.5' fill='rgba(0,0,0,0.3)'/&gt;&lt;circle cx='11' cy='17' r='2' fill='rgba(0,0,0,0.25)'/&gt;&lt;circle cx='16' cy='19' r='1.2' fill='rgba(0,0,0,0.2)'/&gt;&lt;defs&gt;&lt;radialGradient id='g' cx='0.35' cy='0.35'&gt;&lt;stop offset='0%25' stop-color='%23d8d8d8'/&gt;&lt;stop offset='60%25' stop-color='%23888'/&gt;&lt;stop offset='100%25' stop-color='%23222'/&gt;&lt;/radialGradient&gt;&lt;/defs&gt;&lt;/svg&gt;" rel="icon" type="image/svg+xml"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -821,6 +821,10 @@
     .extracted-table td.model-name-cell {
       font-weight: 600;
       color: var(--white);
+      padding-left: 18px !important;
+      margin-left: 0 !important;
+      text-indent: 0 !important;
+      text-align: left !important;
     }
 
     /* ════════════════════════════════════════
@@ -858,7 +862,7 @@
     .video-info {
       padding: 18px 22px;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 14px;
     }
     .video-badge {
@@ -867,7 +871,6 @@
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
       font-size: .95rem;
-      margin-top: 2px;
     }
     .vb-blue   { background: rgba(79,128,255,.12); }
     .vb-violet { background: rgba(139,92,246,.12); }
@@ -878,9 +881,10 @@
       font-size: .93rem;
       font-weight: 700;
       color: var(--white);
-      margin-bottom: 4px;
+      margin-bottom: 0;
     }
     .video-meta p {
+      margin-top: 4px;
       font-size: .8rem;
       color: var(--muted);
       line-height: 1.55;
@@ -1627,10 +1631,10 @@
 <span>Accepted · 4th AI4Space Workshop · CVPR 2026</span>
 </a>
 <h1>
-<span class="hl">LuMon</span> — Lunar Monocular<br/>Depth Estimation Benchmark
+<span class="hl">LuMon</span> - Lunar Monocular<br/>Depth Estimation Benchmark
       </h1>
 <p class="hero-abstract">
-        A comprehensive benchmark and development suite evaluating <strong style="color:var(--silver)">14 state-of-the-art depth models</strong> across <strong style="color:var(--silver)">6 diverse datasets</strong>. We introduce stereo ground truth for <strong style="color:var(--silver)">Chang'e-3</strong> and the <strong style="color:var(--silver)">CHERI</strong> dark-analog suite. <strong style="color:var(--silver)">LuSNAR</strong>: Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks.
+        A comprehensive benchmark and development suite evaluating <strong style="color:var(--silver)">14 state-of-the-art depth models</strong> across <strong style="color:var(--silver)">6 diverse datasets</strong> including Etna-LRNT, Etna-S3LI, and LunarSim. We introduce stereo ground truth for <strong style="color:var(--silver)">Chang'e-3</strong> and the <strong style="color:var(--silver)">CHERI</strong> dark-analog suite.
       </p>
 <div class="workshop-info">
 <div class="wi-item">
@@ -1657,6 +1661,10 @@
 <svg aria-hidden="true" fill="currentColor" viewbox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12A11.5 11.5 0 0 0 8.36 22.9c.58.11.79-.25.79-.56l-.01-2.16c-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.97.1-.75.4-1.26.72-1.55-2.55-.29-5.23-1.28-5.23-5.67 0-1.25.44-2.27 1.18-3.08-.12-.29-.51-1.47.11-3.07 0 0 .96-.31 3.15 1.18a10.8 10.8 0 0 1 5.73 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.6.23 2.78.12 3.07.73.81 1.18 1.83 1.18 3.08 0 4.4-2.69 5.38-5.25 5.66.42.36.78 1.06.78 2.14l-.01 3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"></path></svg>
           GitHub Repo
         </a>
+<a class="btn btn-github btn-huggingface" href="https://huggingface.co/LuMonDepth" rel="noopener" target="_blank" style="background: rgba(255,204,102,.1); border-color: rgba(255,204,102,.3); color: #ffd27a;">
+<span style="font-size: 16px;">🤗</span>
+          Hugging Face
+        </a>
 <a class="btn btn-ghost" href="#videos">
 <svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect height="14" rx="2" ry="2" width="15" x="1" y="5"></rect></svg>
           Watch Results
@@ -1668,20 +1676,28 @@
 <div class="moon-glow"></div>
 <div class="moon-body">
 <div class="moon-sphere">
-<div class="crater" style="--s:70px; transform: rotateX(-20deg) rotateY(0deg) translateZ(170px)"></div>
-<div class="crater" style="--s:42px; transform: rotateX(10deg) rotateY(-40deg) translateZ(170px)"></div>
-<div class="crater" style="--s:28px; transform: rotateX(-30deg) rotateY(30deg) translateZ(170px)"></div>
-<div class="crater" style="--s:20px; transform: rotateX(30deg) rotateY(20deg) translateZ(170px)"></div>
-<div class="crater" style="--s:16px; transform: rotateX(-10deg) rotateY(-60deg) translateZ(170px)"></div>
-<div class="crater" style="--s:34px; transform: rotateX(-15deg) rotateY(120deg) translateZ(170px)"></div>
-<div class="crater" style="--s:24px; transform: rotateX(25deg) rotateY(150deg) translateZ(170px)"></div>
-<div class="crater" style="--s:14px; transform: rotateX(-5deg) rotateY(200deg) translateZ(170px)"></div>
-<div class="crater" style="--s:26px; transform: rotateX(-40deg) rotateY(250deg) translateZ(170px)"></div>
-<div class="crater" style="--s:50px; transform: rotateX(20deg) rotateY(100deg) translateZ(170px)"></div>
-<div class="crater" style="--s:18px; transform: rotateX(40deg) rotateY(-100deg) translateZ(170px)"></div>
-<div class="crater" style="--s:32px; transform: rotateX(-25deg) rotateY(-150deg) translateZ(170px)"></div>
-<div class="crater" style="--s:40px; transform: rotateX(45deg) rotateY(180deg) translateZ(170px)"></div>
-<div class="crater" style="--s:22px; transform: rotateX(-10deg) rotateY(-200deg) translateZ(170px)"></div>
+<div class="crater" style="--s:70px; transform: rotateX(0deg) rotateY(0deg) translateZ(170px)"></div>
+<div class="crater" style="--s:50px; transform: rotateX(0deg) rotateY(60deg) translateZ(170px)"></div>
+<div class="crater" style="--s:45px; transform: rotateX(35deg) rotateY(30deg) translateZ(170px)"></div>
+<div class="crater" style="--s:42px; transform: rotateX(-35deg) rotateY(30deg) translateZ(170px)"></div>
+<div class="crater" style="--s:40px; transform: rotateX(0deg) rotateY(120deg) translateZ(170px)"></div>
+<div class="crater" style="--s:38px; transform: rotateX(35deg) rotateY(90deg) translateZ(170px)"></div>
+<div class="crater" style="--s:35px; transform: rotateX(-35deg) rotateY(90deg) translateZ(170px)"></div>
+<div class="crater" style="--s:34px; transform: rotateX(0deg) rotateY(180deg) translateZ(170px)"></div>
+<div class="crater" style="--s:32px; transform: rotateX(35deg) rotateY(150deg) translateZ(170px)"></div>
+<div class="crater" style="--s:30px; transform: rotateX(-35deg) rotateY(150deg) translateZ(170px)"></div>
+<div class="crater" style="--s:28px; transform: rotateX(0deg) rotateY(240deg) translateZ(170px)"></div>
+<div class="crater" style="--s:26px; transform: rotateX(35deg) rotateY(210deg) translateZ(170px)"></div>
+<div class="crater" style="--s:25px; transform: rotateX(-35deg) rotateY(210deg) translateZ(170px)"></div>
+<div class="crater" style="--s:24px; transform: rotateX(0deg) rotateY(300deg) translateZ(170px)"></div>
+<div class="crater" style="--s:22px; transform: rotateX(35deg) rotateY(270deg) translateZ(170px)"></div>
+<div class="crater" style="--s:20px; transform: rotateX(-35deg) rotateY(270deg) translateZ(170px)"></div>
+<div class="crater" style="--s:20px; transform: rotateX(65deg) rotateY(0deg) translateZ(170px)"></div>
+<div class="crater" style="--s:18px; transform: rotateX(-65deg) rotateY(0deg) translateZ(170px)"></div>
+<div class="crater" style="--s:18px; transform: rotateX(65deg) rotateY(120deg) translateZ(170px)"></div>
+<div class="crater" style="--s:16px; transform: rotateX(-65deg) rotateY(120deg) translateZ(170px)"></div>
+<div class="crater" style="--s:15px; transform: rotateX(65deg) rotateY(240deg) translateZ(170px)"></div>
+<div class="crater" style="--s:14px; transform: rotateX(-65deg) rotateY(240deg) translateZ(170px)"></div>
 </div>
 </div>
 <div class="moon-ring"></div>
@@ -1734,13 +1750,7 @@
 </div>
 <div class="abstract-box">
 <p>
-        Monocular depth estimation (MDE) is a critical capability for autonomous lunar rovers, enabling safe navigation and mission operations in environments where traditional sensors face severe limitations. The unique challenges of the lunar surface — extreme lighting contrast, featureless regolith, crater geometry, and the absence of an atmosphere — make terrestrial depth models unreliable when transferred directly to the lunar domain.
-      </p>
-<p>
-        We present <strong>LuMon</strong>, a comprehensive benchmarking framework and development suite that systematically evaluates <strong>14 state-of-the-art MDE models</strong> across <strong>6 diverse datasets</strong> spanning synthetic simulations, Earth analog environments, and real lunar mission data. We introduce novel stereo ground-truth depth for authentic <strong>Chang'e-3</strong> mission imagery and the <strong>CHERI</strong> dark-analog dataset. <strong>LuSNAR</strong>: Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks.
-      </p>
-<p>
-        Through comprehensive zero-shot evaluation and domain-specific fine-tuning experiments, we reveal that <strong>metric foundation models consistently outperform relative methods</strong> in the lunar domain, with fine-tuned DepthAnything v2 achieving state-of-the-art performance (δ₁ = 0.84). We identify craters and extreme shading as primary failure modes, characterize scale drift across depth ranges, and demonstrate that Earth analog datasets can be misleading proxies for true lunar performance. All evaluation scripts, fine-tuning code, and dataset tools are released publicly.
+        Monocular Depth Estimation (MDE) is crucial for autonomous lunar rover navigation using electro-optical cameras. However, deploying terrestrial MDE networks to the Moon brings a severe domain gap due to harsh shadows, textureless regolith, and zero atmospheric scattering. Existing evaluations rely on analogs that fail to replicate these conditions and lack actual metric ground truth. To address this, we present LuMon, a comprehensive benchmarking framework to evaluate MDE methods for lunar exploration. We introduce novel datasets featuring high-quality stereo ground truth depth from the real Chang'e-3 mission and the CHERI dark analog dataset. Utilizing this framework, we conduct a systematic zero-shot evaluation of state-of-the-art architectures across synthetic, analog, and real datasets. We rigorously assess performance against mission critical challenges like craters, rocks, extreme shading, and varying depth ranges. Furthermore, we establish a sim-to-real domain adaptation baseline by fine tuning a foundation model on synthetic data. While this adaptation yields drastic in-domain performance gains, it exhibits minimal generalization to authentic lunar imagery, highlighting a persistent cross-domain transfer gap. Our extensive analysis reveals the inherent limitations of current networks and sets a standard foundation to guide future advancements in extraterrestrial perception and domain adaptation.
       </p>
 </div>
 </div>
@@ -1757,12 +1767,12 @@
 <div class="contrib-card">
 <div aria-hidden="true" class="cc-icon ic-v"><svg fill="none" height="20" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><circle cx="12" cy="12" r="9"></circle><path d="M15 8a5.5 5.5 0 00-4 9.2A9 9 0 0115 8z" fill="rgba(139,92,246,.2)"></path></svg></div>
 <div class="cc-title">Novel Lunar Datasets</div>
-<div class="cc-desc">Stereo ground-truth depth for real <strong>Chang'e-3</strong> imagery and the novel <strong>CHERI</strong> dark-analog dataset (extreme polar-style lighting). <strong>LuSNAR</strong>: Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks.</div>
+<div class="cc-desc">Stereo ground-truth depth for real <strong>Chang'e-3</strong> imagery and the novel <strong>CHERI</strong> dark-analog dataset (extreme polar-style lighting). <strong>LuSNAR</strong>: Public simulator based dataset, providing stereo images, dense depth, and semantic masks across five geological classes.</div>
 </div>
 <div class="contrib-card">
 <div aria-hidden="true" class="cc-icon ic-b"><svg fill="none" height="20" stroke="#7aa4ff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><rect height="9" rx="1" width="4" x="3" y="12"></rect><rect height="15" rx="1" width="4" x="10" y="6"></rect><rect height="19" rx="1" width="4" x="17" y="2"></rect></svg></div>
 <div class="cc-title">Comprehensive Zero-Shot Benchmark</div>
-<div class="cc-desc">First systematic evaluation of 14 contemporary MDE architectures — covering both metric and relative paradigms — across 6 datasets without dataset-specific tuning.</div>
+<div class="cc-desc">First systematic evaluation of 14 contemporary MDE architectures - covering both metric and relative paradigms - across 6 datasets without dataset-specific tuning.</div>
 </div>
 <div class="contrib-card">
 <div aria-hidden="true" class="cc-icon ic-c"><svg fill="none" height="20" stroke="#5ee8f5" stroke-width="1.8" viewbox="0 0 24 24" width="20"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="21" y1="16.5" y2="21"></line></svg></div>
@@ -1777,12 +1787,12 @@
 <div class="contrib-card">
 <div aria-hidden="true" class="cc-icon ic-b"><svg fill="none" height="20" stroke="#7aa4ff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
 <div class="cc-title">Open Development Suite</div>
-<div class="cc-desc">Full release of evaluation scripts, LoRA fine-tuning code (334M → 34M parameters), dataset processing tools, multi-GPU inference, and visualization utilities.</div>
+<div class="cc-desc">Full release of evaluation scripts, LoRA fine-tuning code, dataset processing tools, multi-GPU inference, and visualization utilities.</div>
 </div>
 <div class="contrib-card">
 <div aria-hidden="true" class="cc-icon ic-v"><svg fill="none" height="20" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="20"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
 <div class="cc-title">Efficiency Profiling</div>
-<div class="cc-desc">Detailed profiling of FPS, VRAM consumption, and TFLOPs alongside depth accuracy, offering practical deployment guidance for power- and memory-constrained rover hardware.</div>
+<div class="cc-desc">Detailed profiling of FPS, VRAM consumption, and TFLOPs alongside depth accuracy, offering practical deployment guidance for power and memory-constrained rover hardware.</div>
 </div>
 </div>
 </div>
@@ -1792,7 +1802,7 @@
 <div class="wrap">
 <div class="sec-head">
 <div class="sec-label">Datasets</div>
-<h2 class="sec-h">Benchmark Suite — 6 Datasets</h2>
+<h2 class="sec-h">Benchmark Suite - 6 Datasets</h2>
 <p class="sec-p">From simulation and Earth analogs to real Chang'e-3 mission imagery, LuMon aggregates six datasets for cross-domain lunar MDE evaluation.</p>
 </div>
 <div class="ds-grid">
@@ -1813,7 +1823,7 @@
 <div class="ds-name">LuSNAR</div>
 <div class="ds-badges"><span class="tag tag-blue">Synthetic</span></div>
 </div>
-<div class="ds-body">Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks.</div>
+<div class="ds-body">Public simulator based dataset, providing stereo images, dense depth, and semantic masks across five geological classes.</div>
 <div class="ds-tags">
 <span class="tag tag-violet">1024×1024</span>
 <span class="tag tag-cyan">Dense GT</span>
@@ -1859,9 +1869,9 @@
 <div class="ds-card" style="border-color: rgba(251,191,36,.2);">
 <div class="ds-top">
 <div class="ds-name">Chang'e-3</div>
-<div class="ds-badges"><span class="tag tag-amber">Real Lunar</span></div>
+<div class="ds-badges"><span class="tag tag-amber">In-situ</span></div>
 </div>
-<div class="ds-body">Authentic lunar surface data from China's Chang'e-3 mission. The only real lunar dataset — the ultimate test of domain transfer from simulation and analogs.</div>
+<div class="ds-body">Authentic lunar surface data from China's Chang'e-3 mission. The only real lunar dataset allowing for the ultimate test of domain transfer from simulation and analogs.</div>
 <div class="ds-tags">
 <span class="tag tag-amber">27 cm/px</span>
 <span class="tag tag-cyan">Dense GT</span>
@@ -1917,8 +1927,7 @@
 <div class="video-info">
 <div aria-hidden="true" class="video-badge vb-blue"><svg fill="none" height="18" stroke="#7aa4ff" stroke-width="1.8" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><circle cx="10" cy="10" fill="rgba(79,128,255,.2)" r="3.5"></circle></svg></div>
 <div class="video-meta">
-<h4>LunarSim — Full Model Comparison</h4>
-<p>All 14 evaluated models visualized side-by-side on the LunarSim synthetic dataset. Standard orbital lighting with diverse crater and rock distributions.</p>
+<h4>LunarSim</h4>
 </div>
 </div>
 </div>
@@ -1932,7 +1941,6 @@
 <div aria-hidden="true" class="video-badge vb-violet"><svg fill="none" height="18" stroke="#b07aff" stroke-width="1.8" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="9"></circle><path d="M15 8a5.5 5.5 0 00-4 9.2A9 9 0 0115 8z" fill="rgba(139,92,246,.25)"></path></svg></div>
 <div class="video-meta">
 <h4>LuSNAR</h4>
-<p>Public Unreal Engine lunar simulator dataset (Liu et al.): stereo RGB, dense depth, and semantic masks.</p>
 </div>
 </div>
 </div>
@@ -1946,7 +1954,6 @@
 <div aria-hidden="true" class="video-badge vb-amber"><svg fill="none" height="18" stroke="#fcd34d" stroke-width="1.8" viewbox="0 0 24 24" width="18"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg></div>
 <div class="video-meta">
 <h4>CHERI (Novel Dataset)</h4>
-<p>Our novel dark analog dataset with extreme polar lighting — permanently shadowed regions cause catastrophic failure in relative methods.</p>
 </div>
 </div>
 </div>
@@ -1960,7 +1967,6 @@
 <div aria-hidden="true" class="video-badge vb-green"><svg fill="none" height="18" stroke="#5ee8b4" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M12 3L2 21h20L12 3z"></path><path d="M12 3v6" stroke-dasharray="2 2"></path></svg></div>
 <div class="video-meta">
 <h4>Etna-LRNT (Earth Analog)</h4>
-<p>Volcanic terrain with SGM stereo ground truth. Demonstrates why analog datasets can be misleading proxies for true lunar performance.</p>
 </div>
 </div>
 </div>
@@ -1974,7 +1980,6 @@
 <div aria-hidden="true" class="video-badge vb-cyan"><svg fill="none" height="18" stroke="#5ee8f5" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M2 20h20"></path><path d="M5 20v-6l7-10 7 10v6"></path><circle cx="12" cy="9" r="2"></circle></svg></div>
 <div class="video-meta">
 <h4>Etna-S3LI (Earth Analog)</h4>
-<p>LiDAR ground truth from volcanic terrain enabling precise geometric error analysis at structural boundaries.</p>
 </div>
 </div>
 </div>
@@ -1992,25 +1997,25 @@
 <div class="metrics-grid">
 <div class="metric-card">
 <div class="mc-title t-b">Depth Quality</div>
-<div class="mi"><div class="mi-dot d-b"></div><span><strong>δ₁, δ₂, δ₃</strong> — Threshold accuracy at 1.25×, 1.25²×, 1.25³×</span></div>
-<div class="mi"><div class="mi-dot d-b"></div><span><strong>A.Rel</strong> — Absolute relative error</span></div>
-<div class="mi"><div class="mi-dot d-b"></div><span><strong>Sq.Rel</strong> — Squared relative error</span></div>
-<div class="mi"><div class="mi-dot d-b"></div><span><strong>RMSE</strong> — Root mean squared error (m)</span></div>
-<div class="mi"><div class="mi-dot d-b"></div><span><strong>MAE</strong> — Mean absolute error (m)</span></div>
-<div class="mi"><div class="mi-dot d-b"></div><span><strong>SILog</strong> — Scale-invariant log error</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>δ₁, δ₂, δ₃</strong> - Threshold accuracy at 1.25×, 1.25²×, 1.25³×</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>A.Rel</strong> - Absolute relative error</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>Sq.Rel</strong> - Squared relative error</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>RMSE</strong> - Root mean squared error (m)</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>MAE</strong> - Mean absolute error (m)</span></div>
+<div class="mi"><div class="mi-dot d-b"></div><span><strong>SILog</strong> - Scale-invariant log error</span></div>
 </div>
 <div class="metric-card">
 <div class="mc-title t-c">Pose Estimation</div>
-<div class="mi"><div class="mi-dot d-c"></div><span><strong>Median Rotation Error</strong> — Angular pose error (°)</span></div>
-<div class="mi"><div class="mi-dot d-c"></div><span><strong>Median Translation Error</strong> — Positional pose error (m)</span></div>
-<div class="mi"><div class="mi-dot d-c"></div><span><strong>AUC</strong> — Area under pose accuracy curve</span></div>
+<div class="mi"><div class="mi-dot d-c"></div><span><strong>Median Rotation Error</strong> - Angular pose error (°)</span></div>
+<div class="mi"><div class="mi-dot d-c"></div><span><strong>Median Translation Error</strong> - Positional pose error (m)</span></div>
+<div class="mi"><div class="mi-dot d-c"></div><span><strong>AUC</strong> - Area under pose accuracy curve</span></div>
 <div class="mi"><div class="mi-dot d-c"></div><span>Downstream rover navigation validation</span></div>
 </div>
 <div class="metric-card">
 <div class="mc-title t-g">Efficiency</div>
-<div class="mi"><div class="mi-dot d-g"></div><span><strong>FPS</strong> — Inference speed on standard GPU</span></div>
-<div class="mi"><div class="mi-dot d-g"></div><span><strong>VRAM</strong> — Peak GPU memory footprint (GB)</span></div>
-<div class="mi"><div class="mi-dot d-g"></div><span><strong>TFLOPs</strong> — Computational complexity</span></div>
+<div class="mi"><div class="mi-dot d-g"></div><span><strong>FPS</strong> - Inference speed on standard GPU</span></div>
+<div class="mi"><div class="mi-dot d-g"></div><span><strong>VRAM</strong> - Peak GPU memory footprint (GB)</span></div>
+<div class="mi"><div class="mi-dot d-g"></div><span><strong>TFLOPs</strong> - Computational complexity</span></div>
 <div class="mi"><div class="mi-dot d-g"></div><span>Practical rover deployment analysis</span></div>
 </div>
 </div>
@@ -2026,27 +2031,65 @@
 </div>
 <div class="findings-row">
 <div class="finding-card">
-<div class="fn fn-b">1.00</div>
-<h4>Peak δ₁ Accuracy</h4>
-<p>DAv2-FT achieves 1.00 threshold accuracy on Etna-S3LI, establishing strong performance across all datasets.</p>
+<div class="fn fn-b" style="display:flex; align-items:center; justify-content:center;"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="36"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
+<h4>Foundation Dominance</h4>
+<p>Metric foundation models preserve internal linearity for stable 3D geometry and provide the strongest zero-shot baseline for lunar topography.</p>
 </div>
 <div class="finding-card">
-<div class="fn fn-v">4.2×</div>
-<h4>Shadow Robustness</h4>
-<p>In shaded extremes (LuSNAR), average metric models outperform base relative methods by over 4× in threshold accuracy.</p>
+<div class="fn fn-v" style="display:flex; align-items:center; justify-content:center;"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="36"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg></div>
+<h4>Topological Hazards</h4>
+<p>Complex surface geometries like craters and rocks degrade zero-shot depth estimation significantly more than severe lunar shading.</p>
 </div>
 <div class="finding-card">
-<div class="fn fn-c">0.03</div>
-<h4>Best A.Rel Error</h4>
-<p>Metric-3D v2, UniDepth v2, and MapAnything consistently achieve the lowest A.Rel error of 0.03 on standard terrain.</p>
-</div>
-<div class="finding-card">
-<div class="fn fn-g">15</div>
-<h4>Models Benchmarked</h4>
-<p>MiDaS, DepthAnything v2/3, MapAnything, Marigold, UniDepth, and 10 more methods evaluated.</p>
+<div class="fn fn-c" style="display:flex; align-items:center; justify-content:center;"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="36"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
+<h4>Sim-to-Real Gap</h4>
+<p>While fine-tuning bridges the sim-to-sim gap, it fails to resolve the broader sim-to-real shift, proving simulated environments are insufficient alone.</p>
 </div>
 </div>
-</div><div class="slider-container" id="tableSlider" style="padding: 20px 0; margin: 40px auto; width: 100%; max-width: 1500px;"><button aria-label="Previous Table" class="slider-arrow slider-prev"><svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><polyline points="15 18 9 12 15 6"></polyline></svg></button><button aria-label="Next Table" class="slider-arrow slider-next"><svg fill="none" height="20" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="20"><polyline points="9 18 15 12 9 6"></polyline></svg></button><div class="slider-wrapper" id="sliderWrapper"><div class="slider-slide" style="width: 100%; box-sizing: border-box; padding: 0 50px; display: block;"><div class="table-wrap" style="width: 100%; border: none; background: transparent;"><h3 style="color: var(--white); text-align: center; margin-bottom: 20px; font-size: 1.1rem;">Overall Evaluation Across Datasets</h3><div class="table-scroll" style="width: 100%; overflow-x: auto;"><table class="extracted-table"><thead><tr><th rowspan="2">Model</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LunarSim</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LuSNAR</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-LRNT</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-S3LI</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Chang'e-3</th></tr><tr><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th></tr></thead><tbody><tr><td>DAv2-FT(Ours)</td><td class="silver-c">0.84</td><td class="silver-c">0.13</td><td>13.96</td><td class="gold">0.93</td><td class="gold">0.07</td><td class="gold">1.07</td><td class="gold">1.00</td><td>0.05</td><td>0.13</td><td>0.84</td><td>0.13</td><td>1.30</td><td>0.92</td><td>0.08</td><td>0.70</td></tr><tr><td>DepthAnything v2</td><td>0.56</td><td>0.26</td><td>15.18</td><td>0.31</td><td>0.45</td><td>2.89</td><td class="gold">1.00</td><td>0.06</td><td>0.15</td><td>0.88</td><td>0.12</td><td>1.22</td><td class="silver-c">0.95</td><td class="silver-c">0.06</td><td>0.56</td></tr><tr><td>DepthAnything3</td><td>0.63</td><td>0.22</td><td>14.15</td><td>0.53</td><td>0.29</td><td>1.99</td><td class="silver-c">1.00</td><td>0.04</td><td>0.11</td><td class="gold">0.91</td><td class="gold">0.10</td><td>1.12</td><td class="gold">0.96</td><td class="gold">0.05</td><td class="silver-c">0.44</td></tr><tr><td>MoGe-2</td><td>0.77</td><td>0.15</td><td>12.17</td><td>0.53</td><td>0.29</td><td>1.80</td><td>0.99</td><td>0.05</td><td>0.15</td><td class="gold">0.91</td><td class="gold">0.10</td><td class="silver-c">1.08</td><td>0.95</td><td>0.06</td><td>0.45</td></tr><tr><td>DepthPro</td><td>0.50</td><td>0.29</td><td>17.57</td><td>0.33</td><td>0.45</td><td>2.70</td><td>0.73</td><td>241.71</td><td>450.05</td><td>0.89</td><td>0.11</td><td>1.11</td><td>0.89</td><td>0.10</td><td>0.89</td></tr><tr><td>Metric-3D v2</td><td>0.75</td><td>0.16</td><td>12.53</td><td>0.61</td><td>0.25</td><td>1.71</td><td>1.00</td><td class="gold">0.03</td><td>0.10</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.95</td><td class="gold">0.05</td><td class="gold">0.43</td></tr><tr><td>UniDepth v2</td><td>0.76</td><td>0.21</td><td>16.16</td><td>0.63</td><td>0.26</td><td>2.14</td><td>1.00</td><td class="gold">0.03</td><td class="gold">0.07</td><td>0.87</td><td>0.12</td><td>1.20</td><td>0.94</td><td>0.07</td><td>0.54</td></tr><tr><td>MapAnything</td><td class="gold">0.86</td><td class="gold">0.11</td><td class="gold">10.73</td><td>0.74</td><td>0.17</td><td class="silver-c">1.53</td><td>1.00</td><td class="silver-c">0.03</td><td class="silver-c">0.08</td><td class="silver-c">0.91</td><td class="silver-c">0.10</td><td class="gold">1.05</td><td>0.95</td><td>0.07</td><td>0.52</td></tr><tr><td>VDA</td><td>0.75</td><td>0.16</td><td>13.94</td><td>0.77</td><td>0.17</td><td>2.05</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.83</td><td>0.14</td><td>1.34</td><td>0.93</td><td>0.08</td><td>0.68</td></tr><tr><td>MetricAnything</td><td>0.79</td><td>0.15</td><td class="silver-c">12.08</td><td>0.51</td><td>0.30</td><td>1.83</td><td>0.98</td><td>0.07</td><td>0.22</td><td>0.91</td><td>0.10</td><td class="gold">1.05</td><td>0.95</td><td>0.06</td><td>0.44</td></tr><tr><td>DepthAnything-AC</td><td>0.70</td><td>0.28</td><td>19.12</td><td>0.70</td><td>0.26</td><td>2.63</td><td>1.00</td><td>0.05</td><td>0.12</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.66</td><td>0.22</td><td>1.55</td></tr><tr><td>DepthCrafter</td><td>0.40</td><td>0.37</td><td>20.28</td><td>0.41</td><td>0.47</td><td>2.96</td><td>0.92</td><td>0.10</td><td>0.28</td><td>0.80</td><td>0.15</td><td>1.44</td><td>0.87</td><td>0.13</td><td>1.05</td></tr><tr><td>Lotus</td><td>0.59</td><td>0.27</td><td>20.43</td><td>0.36</td><td>0.44</td><td>3.08</td><td>0.65</td><td>0.19</td><td>0.49</td><td>0.80</td><td>0.15</td><td>1.45</td><td>0.70</td><td>0.19</td><td>1.64</td></tr><tr><td>MiDaS v3.1</td><td>0.78</td><td>0.17</td><td>14.97</td><td class="silver-c">0.81</td><td class="silver-c">0.13</td><td>1.68</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.89</td><td>0.11</td><td>1.15</td><td>0.81</td><td>0.15</td><td>1.12</td></tr><tr><td>Marigold</td><td>0.67</td><td>0.21</td><td>17.25</td><td>0.62</td><td>0.24</td><td>2.02</td><td>0.94</td><td>0.10</td><td>0.27</td><td>0.86</td><td>0.12</td><td>1.26</td><td>0.91</td><td>0.09</td><td>0.69</td></tr></tbody></table></div></div></div><div class="slider-slide" style="width: 100%; box-sizing: border-box; padding: 0 50px; display: block;"><div class="table-wrap" style="width: 100%; border: none; background: transparent;"><h3 style="color: var(--white); text-align: center; margin-bottom: 20px; font-size: 1.1rem;">Evaluation on Shaded Regions</h3><div class="table-scroll" style="width: 100%; overflow-x: auto;"><table class="extracted-table"><thead><tr><th rowspan="2">Model</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LunarSim</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LuSNAR</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-LRNT</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-S3LI</th><th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Chang'e-3</th></tr><tr><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th><th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th></tr></thead><tbody><tr><td>DAv2-FT(Ours)</td><td class="silver-c">0.79</td><td class="silver-c">0.15</td><td>15.10</td><td class="gold">0.84</td><td class="gold">0.11</td><td class="gold">0.95</td><td class="gold">1.00</td><td>0.06</td><td>0.10</td><td>0.46</td><td>0.29</td><td>2.88</td><td>0.89</td><td>0.10</td><td>0.73</td></tr><tr><td>DepthAnything v2</td><td>0.47</td><td>0.29</td><td>16.39</td><td>0.20</td><td>0.66</td><td>2.86</td><td>0.99</td><td>0.07</td><td>0.12</td><td>0.51</td><td>0.33</td><td>2.85</td><td class="gold">0.94</td><td>0.07</td><td>0.59</td></tr><tr><td>DepthAnything3</td><td>0.54</td><td>0.26</td><td>15.77</td><td>0.34</td><td>0.40</td><td>2.15</td><td class="gold">1.00</td><td class="silver-c">0.05</td><td>0.07</td><td>0.53</td><td>0.46</td><td>3.58</td><td class="gold">0.94</td><td class="gold">0.06</td><td class="silver-c">0.45</td></tr><tr><td>MoGe-2</td><td>0.68</td><td>0.18</td><td>14.42</td><td>0.35</td><td>0.41</td><td>1.90</td><td>0.99</td><td>0.05</td><td>0.08</td><td>0.56</td><td>0.38</td><td>3.22</td><td>0.93</td><td>0.07</td><td>0.46</td></tr><tr><td>DepthPro</td><td>0.38</td><td>0.35</td><td>21.33</td><td>0.23</td><td>0.68</td><td>2.83</td><td>0.39</td><td>559.37</td><td>818.97</td><td>0.59</td><td>0.25</td><td>2.36</td><td>0.85</td><td>0.11</td><td>0.87</td></tr><tr><td>Metric-3D v2</td><td>0.62</td><td>0.20</td><td>14.35</td><td>0.39</td><td>0.38</td><td>1.92</td><td class="silver-c">1.00</td><td>0.05</td><td>0.07</td><td>0.68</td><td>0.23</td><td>2.35</td><td class="silver-c">0.94</td><td class="gold">0.06</td><td class="gold">0.44</td></tr><tr><td>UniDepth v2</td><td>0.70</td><td>0.23</td><td>24.12</td><td>0.45</td><td>0.36</td><td>2.85</td><td>1.00</td><td class="gold">0.03</td><td class="silver-c">0.05</td><td>0.75</td><td class="silver-c">0.17</td><td>1.90</td><td>0.92</td><td>0.08</td><td>0.54</td></tr><tr><td>MapAnything</td><td class="gold">0.80</td><td class="gold">0.13</td><td class="gold">11.48</td><td>0.60</td><td>0.22</td><td class="silver-c">1.64</td><td>1.00</td><td class="gold">0.03</td><td class="gold">0.04</td><td class="gold">0.80</td><td class="gold">0.15</td><td class="gold">1.63</td><td>0.93</td><td>0.08</td><td>0.55</td></tr><tr><td>VDA</td><td>0.66</td><td>0.19</td><td>16.31</td><td class="silver-c">0.65</td><td>0.23</td><td>2.19</td><td>1.00</td><td>0.06</td><td>0.09</td><td>0.48</td><td>0.28</td><td>2.61</td><td>0.90</td><td>0.10</td><td>0.68</td></tr><tr><td>MetricAnything</td><td>0.74</td><td>0.16</td><td class="silver-c">13.19</td><td>0.32</td><td>0.42</td><td>2.00</td><td>0.99</td><td>0.07</td><td>0.12</td><td>0.68</td><td>0.23</td><td>2.22</td><td>0.94</td><td class="silver-c">0.06</td><td>0.46</td></tr><tr><td>DepthAnything-AC</td><td>0.63</td><td>0.33</td><td>27.04</td><td>0.54</td><td>0.38</td><td>3.80</td><td>1.00</td><td>0.09</td><td>0.13</td><td>0.62</td><td>0.20</td><td>2.13</td><td>0.58</td><td>0.26</td><td>1.68</td></tr><tr><td>DepthCrafter</td><td>0.37</td><td>0.45</td><td>22.22</td><td>0.28</td><td>0.81</td><td>3.17</td><td>0.89</td><td>0.11</td><td>0.18</td><td>0.46</td><td>0.38</td><td>3.33</td><td>0.83</td><td>0.14</td><td>1.11</td></tr><tr><td>Lotus</td><td>0.46</td><td>0.32</td><td>29.36</td><td>0.28</td><td>0.64</td><td>3.94</td><td>0.45</td><td>0.29</td><td>0.42</td><td>0.48</td><td>0.32</td><td>3.17</td><td>0.63</td><td>0.23</td><td>1.81</td></tr><tr><td>MiDaS v3.1</td><td>0.73</td><td>0.19</td><td>16.70</td><td>0.64</td><td class="silver-c">0.20</td><td>1.99</td><td>0.99</td><td>0.07</td><td>0.10</td><td class="silver-c">0.79</td><td class="gold">0.15</td><td class="silver-c">1.75</td><td>0.74</td><td>0.18</td><td>1.17</td></tr><tr><td>Marigold</td><td>0.51</td><td>0.29</td><td>21.92</td><td>0.43</td><td>0.37</td><td>2.40</td><td>0.90</td><td>0.11</td><td>0.17</td><td>0.49</td><td>0.35</td><td>3.21</td><td>0.89</td><td>0.10</td><td>0.72</td></tr></tbody></table></div></div></div></div><div class="slider-dots" id="sliderDots" style="margin-top: 20px;"><div class="slider-dot active" data-index="0"></div><div class="slider-dot" data-index="1"></div></div></div><p class="table-note">↑ higher is better, ↓ lower is better. <span class="gold">Gold</span> indicates best, <span class="silver-c">Silver</span> indicates second best.</p>
+<h3 style="text-align: center; color: var(--white); margin-bottom: 20px;">Overall Evaluation Across Datasets</h3>
+<div class="table-wrap" style="width: 100%; border: none; background: transparent; margin: 40px 0;">
+<div class="table-scroll" style="width: 100%; overflow-x: auto;">
+<table class="extracted-table">
+<thead>
+<tr>
+<th rowspan="2">Model</th>
+<th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LunarSim</th>
+<th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">LuSNAR</th>
+<th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-LRNT</th>
+<th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Etna-S3LI</th>
+<th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Chang'e-3</th>
+<th colspan="3" style="text-align: center; border-bottom: 1px solid var(--border);">Cheri</th>
+</tr>
+<tr>
+<th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th>
+<th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th>
+<th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th>
+<th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th>
+<th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th>
+<th>δ₁ ↑</th><th>A.Rel ↓</th><th>RMSE ↓</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>DAv2-FT (Ours)</td><td>0.84</td><td>0.13</td><td>13.96</td><td>0.93</td><td>0.07</td><td>1.07</td><td>1.00</td><td>0.05</td><td>0.13</td><td>0.84</td><td>0.13</td><td>1.30</td><td>0.92</td><td>0.08</td><td>0.70</td><td>0.36</td><td>0.50</td><td>3.90</td></tr>
+<tr><td>DepthAnything-v2</td><td>0.56</td><td>0.26</td><td>15.18</td><td>0.31</td><td>0.45</td><td>2.89</td><td>1.00</td><td>0.06</td><td>0.15</td><td>0.88</td><td>0.12</td><td>1.22</td><td>0.95</td><td>0.06</td><td>0.56</td><td>0.32</td><td>0.54</td><td>4.14</td></tr>
+<tr><td>DepthAnything-v3</td><td>0.63</td><td>0.22</td><td>14.15</td><td>0.53</td><td>0.29</td><td>1.99</td><td>1.00</td><td>0.04</td><td>0.11</td><td>0.91</td><td>0.10</td><td>1.12</td><td>0.96</td><td>0.05</td><td>0.44</td><td>0.34</td><td>0.51</td><td>3.97</td></tr>
+<tr><td>MoGe</td><td>0.77</td><td>0.15</td><td>12.17</td><td>0.53</td><td>0.29</td><td>1.80</td><td>0.99</td><td>0.05</td><td>0.15</td><td>0.91</td><td>0.10</td><td>1.08</td><td>0.95</td><td>0.06</td><td>0.45</td><td>0.32</td><td>0.54</td><td>4.12</td></tr>
+<tr><td>DepthPro</td><td>0.50</td><td>0.29</td><td>17.57</td><td>0.33</td><td>0.45</td><td>2.70</td><td>0.73</td><td>241.71</td><td>450.05</td><td>0.89</td><td>0.11</td><td>1.11</td><td>0.89</td><td>0.10</td><td>0.89</td><td>0.32</td><td>0.55</td><td>4.18</td></tr>
+<tr><td>Metric3Dv2</td><td>0.75</td><td>0.16</td><td>12.53</td><td>0.61</td><td>0.25</td><td>1.71</td><td>1.00</td><td>0.03</td><td>0.10</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.95</td><td>0.05</td><td>0.43</td><td>0.33</td><td>0.53</td><td>4.09</td></tr>
+<tr><td>UniDepth</td><td>0.76</td><td>0.21</td><td>16.16</td><td>0.63</td><td>0.26</td><td>2.14</td><td>1.00</td><td>0.03</td><td>0.07</td><td>0.87</td><td>0.12</td><td>1.20</td><td>0.94</td><td>0.07</td><td>0.54</td><td>0.35</td><td>0.51</td><td>3.99</td></tr>
+<tr><td>MapAnything</td><td>0.86</td><td>0.11</td><td>10.73</td><td>0.74</td><td>0.17</td><td>1.53</td><td>1.00</td><td>0.03</td><td>0.08</td><td>0.91</td><td>0.10</td><td>1.05</td><td>0.95</td><td>0.07</td><td>0.52</td><td>0.36</td><td>0.50</td><td>3.91</td></tr>
+<tr><td>VDA</td><td>0.75</td><td>0.16</td><td>13.94</td><td>0.77</td><td>0.17</td><td>2.05</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.83</td><td>0.14</td><td>1.34</td><td>0.93</td><td>0.08</td><td>0.68</td><td>0.43</td><td>0.44</td><td>3.56</td></tr>
+<tr><td>MetricAnything</td><td>0.79</td><td>0.15</td><td>12.08</td><td>0.51</td><td>0.30</td><td>1.83</td><td>0.98</td><td>0.07</td><td>0.22</td><td>0.91</td><td>0.10</td><td>1.05</td><td>0.95</td><td>0.06</td><td>0.44</td><td>0.32</td><td>0.55</td><td>4.17</td></tr>
+<tr><td>DepthAnything-AC</td><td>0.70</td><td>0.28</td><td>19.12</td><td>0.70</td><td>0.26</td><td>2.63</td><td>1.00</td><td>0.05</td><td>0.12</td><td>0.87</td><td>0.12</td><td>1.19</td><td>0.66</td><td>0.22</td><td>1.55</td><td>0.55</td><td>0.35</td><td>3.09</td></tr>
+<tr><td>DepthCrafter</td><td>0.40</td><td>0.37</td><td>20.28</td><td>0.41</td><td>0.47</td><td>2.96</td><td>0.92</td><td>0.10</td><td>0.28</td><td>0.80</td><td>0.15</td><td>1.44</td><td>0.87</td><td>0.13</td><td>1.05</td><td>0.33</td><td>0.53</td><td>4.08</td></tr>
+<tr><td>Lotus</td><td>0.59</td><td>0.27</td><td>20.43</td><td>0.36</td><td>0.44</td><td>3.08</td><td>0.65</td><td>0.19</td><td>0.49</td><td>0.80</td><td>0.15</td><td>1.45</td><td>0.70</td><td>0.19</td><td>1.64</td><td>0.35</td><td>0.49</td><td>3.90</td></tr>
+<tr><td>MiDaS</td><td>0.78</td><td>0.17</td><td>14.97</td><td>0.81</td><td>0.13</td><td>1.68</td><td>1.00</td><td>0.04</td><td>0.12</td><td>0.89</td><td>0.11</td><td>1.15</td><td>0.81</td><td>0.15</td><td>1.12</td><td>0.40</td><td>0.46</td><td>3.71</td></tr>
+<tr><td>Marigold</td><td>0.67</td><td>0.21</td><td>17.25</td><td>0.62</td><td>0.24</td><td>2.02</td><td>0.94</td><td>0.10</td><td>0.27</td><td>0.86</td><td>0.12</td><td>1.26</td><td>0.91</td><td>0.09</td><td>0.69</td><td>0.38</td><td>0.47</td><td>3.75</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<p class="table-note">↑ higher is better, ↓ lower is better. <span class="gold">Gold</span> indicates best, <span class="silver-c">Silver</span> indicates second best.</p>
 
 <p class="table-note table-note-detail">For extensive quantitative results, see the <a href="https://arxiv.org/pdf/2604.09352" rel="noopener" target="_blank">paper PDF</a>.</p>
 </section>
@@ -2134,11 +2177,6 @@
 <a href="https://ai4space.space/" rel="noopener" style="color:#5ee8b4" target="_blank">AI4Space Workshop ↗</a>
 <a href="https://arxiv.org/pdf/2604.09352" rel="noopener" target="_blank">Paper PDF ↗</a>
 <a href="https://arxiv.org/abs/2604.09352" rel="noopener" target="_blank">arXiv ↗</a>
-<a href="#abstract">Abstract</a>
-<a href="#datasets">Datasets</a>
-<a href="#videos">Videos</a>
-<a href="#results">Results</a>
-<a href="#citation">Cite</a>
 </div>
 <div class="footer-copy">Accepted · 4th AI4Space Workshop · CVPR 2026 · Denver</div>
 </div>
@@ -2252,20 +2290,20 @@
 
   // Annotate model groups and re-compute best/second-best highlights with tie handling
   const modelTypeMap = {
-    'DAv2-FT(Ours)': 'Metric',
-    'DepthAnything v2': 'Metric',
-    'DepthAnything3': 'Metric',
-    'MoGe-2': 'Metric',
+    'DAv2-FT (Ours)': 'Metric',
+    'DepthAnything-v2': 'Metric',
+    'DepthAnything-v3': 'Metric',
+    'MoGe': 'Metric',
     'DepthPro': 'Metric',
-    'Metric-3D v2': 'Metric',
-    'UniDepth v2': 'Metric',
+    'Metric3Dv2': 'Metric',
+    'UniDepth': 'Metric',
     'MapAnything': 'Metric',
     'VDA': 'Metric',
     'MetricAnything': 'Metric',
     'DepthAnything-AC': 'Relative',
     'DepthCrafter': 'Relative',
     'Lotus': 'Relative',
-    'MiDaS v3.1': 'Relative',
+    'MiDaS': 'Relative',
     'Marigold': 'Relative'
   };
 
@@ -2371,43 +2409,7 @@
   });
 
   
-  // Table Slider Logic
-  const wrapper = document.getElementById('sliderWrapper');
-  const prevBtn = document.querySelector('.slider-prev');
-  const nextBtn = document.querySelector('.slider-next');
-  if (wrapper && prevBtn && nextBtn) {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slider-slide');
-    const totalSlides = slides.length;
-
-    function updateSlider() {
-      wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
-      const allDots = document.querySelectorAll('.slider-dot');
-      if (allDots.length > 0) {
-        allDots.forEach(d => d.classList.remove('active'));
-        if (allDots[currentSlide]) allDots[currentSlide].classList.add('active');
-      }
-    }
-    
-    // Also bind dots clicks
-    const allDots = document.querySelectorAll('.slider-dot');
-    allDots.forEach(dot => {
-      dot.addEventListener('click', (e) => {
-        currentSlide = parseInt(e.target.dataset.index);
-        updateSlider();
-      });
-    });
-    
-    prevBtn.addEventListener('click', () => {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateSlider();
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateSlider();
-    });
-  }
+  // Table Slider Logic removed
 
   // BibTeX copy
   document.getElementById('bibCopy').addEventListener('click', function() {

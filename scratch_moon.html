@@ -20,8 +20,8 @@
   .crater {
     position: absolute;
     top: 50%; left: 50%;
-    width: 40px; height: 40px;
-    margin-top: -20px; margin-left: -20px;
+    width: var(--s, 40px); height: var(--s, 40px);
+    margin-top: calc(var(--s, 40px) / -2); margin-left: calc(var(--s, 40px) / -2);
     background: radial-gradient(circle, rgba(0,0,0,.5) 40%, rgba(255,255,255,.3) 70%, transparent 100%);
     border-radius: 50%;
     backface-visibility: hidden;
@@ -35,11 +35,28 @@
 <body>
   <div class="moon-body">
     <div class="moon-sphere">
-      <div class="crater" style="transform: rotateY(0deg) translateZ(170px)"></div>
-      <div class="crater" style="transform: rotateY(90deg) translateZ(170px)"></div>
-      <div class="crater" style="transform: rotateY(180deg) translateZ(170px)"></div>
-      <div class="crater" style="transform: rotateY(270deg) translateZ(170px)"></div>
-      <div class="crater" style="transform: rotateX(45deg) rotateY(45deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:70px; transform: rotateX(0deg) rotateY(0deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:50px; transform: rotateX(0deg) rotateY(60deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:45px; transform: rotateX(35deg) rotateY(30deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:42px; transform: rotateX(-35deg) rotateY(30deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:40px; transform: rotateX(0deg) rotateY(120deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:38px; transform: rotateX(35deg) rotateY(90deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:35px; transform: rotateX(-35deg) rotateY(90deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:34px; transform: rotateX(0deg) rotateY(180deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:32px; transform: rotateX(35deg) rotateY(150deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:30px; transform: rotateX(-35deg) rotateY(150deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:28px; transform: rotateX(0deg) rotateY(240deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:26px; transform: rotateX(35deg) rotateY(210deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:25px; transform: rotateX(-35deg) rotateY(210deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:24px; transform: rotateX(0deg) rotateY(300deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:22px; transform: rotateX(35deg) rotateY(270deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:20px; transform: rotateX(-35deg) rotateY(270deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:20px; transform: rotateX(65deg) rotateY(0deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:18px; transform: rotateX(-65deg) rotateY(0deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:18px; transform: rotateX(65deg) rotateY(120deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:16px; transform: rotateX(-65deg) rotateY(120deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:15px; transform: rotateX(65deg) rotateY(240deg) translateZ(170px)"></div>
+      <div class="crater" style="--s:14px; transform: rotateX(-65deg) rotateY(240deg) translateZ(170px)"></div>
     </div>
   </div>
 </body>
